@@ -9,7 +9,7 @@
 
   :min-lein-version "2.0.0"
 
-  :uber-jar-name "webdev.jar"
+  :uberjar-name "webdev.jar"
 
   :main webdev.core
 
