@@ -57,7 +57,7 @@
        :headers {}})))
 
 (defroutes routes
-  (GET "/" [] home-handler)
+  (GET "/" [] handle-index-items)
   (GET "/goodbye" [] goodbye-handler)
   (GET "/about" [] about-handler)
   (ANY "/request" [] handle-dump)
