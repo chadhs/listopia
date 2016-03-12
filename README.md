@@ -1,14 +1,13 @@
-# webdev
+# listopia
 
-A Clojure library designed to ... well, that part is up to you.
+An exploration of web development in Clojure.
 
 ## Usage
 
-FIXME
+Make lists!
 
 ## License
 
-Copyright © 2016 FIXME
+Copyright © 2016 Chad Stovern
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the Eclipse Public License either version 1.0
