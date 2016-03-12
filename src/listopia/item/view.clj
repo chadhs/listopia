@@ -54,8 +54,8 @@
              :value (if checked "false" "true")}]
     [:div.btn-group
      (if checked
-       [:button.btn.btn-success.btn-xs "DONE"]
-       [:button.btn.btn-primary.btn-xs "TODO"])]]))
+       [:button.btn.btn-success.btn-xs [:i {:class "fa fa-check-square-o"}]]
+       [:button.btn.btn-primary.btn-xs [:i {:class "fa fa-square-o"}]])]]))
 
 (defn items-page [items]
   (html5
@@ -72,7 +72,8 @@
             :rel :stylesheet}]]
    [:body
     [:div.container
-     [:h1 "My Items"]
+     [:h1 "Listopia"]
+     [:h2 "My Items"]
      [:div.row
       (if (seq items)
         [:table.table.table-striped
