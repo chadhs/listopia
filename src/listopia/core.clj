@@ -10,6 +10,8 @@
             [ring.middleware.webjars :refer [wrap-webjars]]
             [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.file-info :refer [wrap-file-info]]
+            [ring.middleware.session :refer [wrap-session]]
+            [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
             [compojure.core :refer [defroutes ANY GET POST PUT DELETE]]
             [compojure.route :refer [not-found]]
             [ring.handler.dump :refer [handle-dump]]))
@@ -90,6 +92,8 @@
 
 (def app
   (-> routes
+      wrap-anti-forgery
+      wrap-session
       wrap-simulated-methods
       wrap-params
       wrap-db

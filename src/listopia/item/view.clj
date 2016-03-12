@@ -1,11 +1,13 @@
 (ns listopia.item.view
   (:require [hiccup.page :refer [html5]]
-            [hiccup.core :refer [html h]]))
+            [hiccup.core :refer [html h]]
+            [ring.util.anti-forgery :refer [anti-forgery-field]]))
 
 (defn new-item []
   (html
    [:form.form-horizontal
     {:method "POST" :action "/items"}
+    (anti-forgery-field)
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :name-input}
       "Name"]
@@ -30,6 +32,7 @@
   (html
    [:form
     {:method "POST" :action (str "/items/" id)}
+    (anti-forgery-field)
     [:input {:type :hidden
              :name "_method"
              :value "DELETE"}]
@@ -42,6 +45,7 @@
   (html
    [:form
     {:method "POST" :action (str "/items/" id)}
+    (anti-forgery-field)
     [:input {:type :hidden
              :name "_method"
              :value "PUT"}]
