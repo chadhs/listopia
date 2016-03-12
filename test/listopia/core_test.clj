@@ -1,6 +1,6 @@
-(ns webdev.core-test
+(ns listopia.core-test
   (:require [clojure.test :refer :all]
-            [webdev.core :refer :all]))
+            [listopia.core :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."

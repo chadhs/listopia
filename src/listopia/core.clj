@@ -1,6 +1,6 @@
-(ns webdev.core
-  (:require [webdev.item.model :as items]
-            [webdev.item.handler :refer [handle-index-items
+(ns listopia.core
+  (:require [listopia.item.model :as items]
+            [listopia.item.handler :refer [handle-index-items
                                          handle-create-item
                                          handle-delete-item
                                          handle-update-item]])
@@ -16,7 +16,7 @@
 
 (def db (or
          (System/getenv "DATABASE_URL")
-         "jdbc:postgresql://localhost/webdev"))
+         "jdbc:postgresql://localhost/listopia"))
 
 (defn home-handler[req]
   {:status 200
@@ -72,7 +72,7 @@
 
 (defn wrap-db [hdlr]
   (fn [req]
-    (hdlr (assoc req :webdev/db db))))
+    (hdlr (assoc req :listopia/db db))))
 
 (defn wrap-server [hdlr]
   (fn [req]

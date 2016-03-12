@@ -1,4 +1,4 @@
-(ns webdev.item.view
+(ns listopia.item.view
   (:require [hiccup.page :refer [html5]]
             [hiccup.core :refer [html h]]))
 

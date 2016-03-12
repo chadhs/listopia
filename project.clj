@@ -1,6 +1,6 @@
-(defproject webdev "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+(defproject listopia "0.2.0-SNAPSHOT"
+  :description "make awesome lists"
+  :url "https://github.com/chadhs/listopia"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
@@ -17,9 +17,9 @@
 
   :min-lein-version "2.0.0"
 
-  :uberjar-name "webdev.jar"
+  :uberjar-name "listopia.jar"
 
-  :main webdev.core
+  :main listopia.core
 
   :profiles {:dev
-             {:main webdev.core/-dev-main}})
+             {:main listopia.core/-dev-main}})

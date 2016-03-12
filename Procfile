@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -cp target/webdev.jar clojure.main -m webdev.core $PORT
+web: java $JVM_OPTS -cp target/listopia.jar clojure.main -m listopia.core $PORT
