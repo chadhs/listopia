@@ -1,6 +1,10 @@
 (ns listopia.item.model
   (:require [clojure.java.jdbc :as db]))
 
+(def dburl (or
+            (System/getenv "DATABASE_URL")
+            "jdbc:postgresql://localhost/listopia"))
+
 (defn create-table! [db]
   (db/execute!
    db
