@@ -52,10 +52,11 @@
     [:input {:type :hidden
              :name "checked"
              :value (if checked "false" "true")}]
-    [:div.btn-group
-     (if checked
-       [:button.btn.btn-success.btn-xs [:i {:class "fa fa-check-square-o"}]]
-       [:button.btn.btn-primary.btn-xs [:i {:class "fa fa-square-o"}]])]]))
+    [:div.btn-transparent
+     [:div.btn-group
+      (if checked
+        [:button.btn.btn-default.btn-xs [:i {:class "fa fa-check-square-o"}]]
+        [:button.btn.btn-default.btn-xs [:i {:class "fa fa-square-o"}]])]]]))
 
 (defn items-page [items]
   (html5
