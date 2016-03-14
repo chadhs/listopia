@@ -14,6 +14,7 @@
                  [hiccup "1.0.5"]
                  ;; middleware
                  [ring/ring-anti-forgery "1.0.0"]
+                 [ring/ring-defaults "0.2.0"]
                  ;; hosted assests
                  [org.webjars/bootstrap "3.3.6"]
                  [org.webjars/font-awesome "4.5.0"]

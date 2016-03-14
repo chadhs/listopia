@@ -1,8 +1,8 @@
 (ns listopia.item.handler
   (:require [listopia.item.model :refer [create-item!
-                                       read-items
-                                       update-item!
-                                       delete-item!]]
+                                         read-items
+                                         update-item!
+                                         delete-item!]]
             [listopia.item.view :refer [items-page]]))
 
 (defn handle-index-items [req]

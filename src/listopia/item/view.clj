@@ -31,11 +31,8 @@
 (defn delete-item-form [id]
   (html
    [:form
-    {:method "POST" :action (str "/items/" id)}
+    {:method "POST" :action (str "/items/delete/" id)}
     (anti-forgery-field)
-    [:input {:type :hidden
-             :name "_method"
-             :value "DELETE"}]
     [:div.btn-group
      [:input.btn.btn-danger.btn-xs
       {:type :submit
@@ -44,11 +41,8 @@
 (defn update-item-form [id checked]
   (html
    [:form
-    {:method "POST" :action (str "/items/" id)}
+    {:method "POST" :action (str "/items/update/" id)}
     (anti-forgery-field)
-    [:input {:type :hidden
-             :name "_method"
-             :value "PUT"}]
     [:input {:type :hidden
              :name "checked"
              :value (if checked "false" "true")}]

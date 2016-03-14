@@ -7,9 +7,9 @@
             [compojure.route :refer [not-found]]))
 
 (defroutes routes
-  (GET "/" [] handle-index-items)
-  (GET "/items" [] handle-index-items)
-  (POST "/items" [] handle-create-item)
-  (DELETE "/items/:item-id" [] handle-delete-item)
-  (PUT "/items/:item-id" [] handle-update-item)
-  (not-found "Page not found."))
+  (GET       "/"                      [] handle-index-items)
+  (GET       "/items"                 [] handle-index-items)
+  (POST      "/items"                 [] handle-create-item)
+  (POST      "/items/delete/:item-id" [] handle-delete-item)
+  (POST      "/items/update/:item-id" [] handle-update-item)
+  (not-found                             "Page not found."))
