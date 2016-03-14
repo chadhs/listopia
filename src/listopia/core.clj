@@ -1,11 +1,11 @@
 (ns listopia.core
-  (:require [listopia.item.model :as model :refer [dburl]]
+  (:require [listopia.item.model :as model :refer [database-url]]
             [listopia.item.middleware :refer [wrap-db
                                               wrap-server]]
             [listopia.item.route :refer [routes]])
   (:require [ring.adapter.jetty :as jetty]
+            [environ.core :refer [env]]
             [ring.middleware.reload :refer [wrap-reload]]
-            ;; [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.file-info :refer [wrap-file-info]]
@@ -24,23 +24,14 @@
       wrap-file-info           ; add file info to static resources
       wrap-webjars))           ; set asset path for webjar assets
 
-;; (def app
-;;   (-> routes
-;;       wrap-simulated-methods
-;;       wrap-db
-;;       wrap-webjars
-;;       (wrap-defaults
-;;        (-> site-defaults
-;;            (assoc-in [:static :resources] "static")))))
-
 (defn -main
   ([] (-main 8000))
-  ([port] (model/create-table! dburl)
+  ([port] (model/create-table! database-url)
           (jetty/run-jetty app
                            {:port (Integer. port)})))
 
 (defn -dev-main
   ([] (-dev-main 8000))
-  ([port] (model/create-table! dburl)
+  ([port] (model/create-table! database-url)
           (jetty/run-jetty (wrap-reload #'app)
                            {:port (Integer. port)})))

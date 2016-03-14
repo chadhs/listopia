@@ -7,6 +7,8 @@
                  ;; core
                  [ring "1.4.0"]
                  [compojure "1.5.0"]
+                 ;; environment
+                 [environ "1.0.2"]
                  ;; database
                  [org.clojure/java.jdbc "0.4.2"]
                  [org.postgresql/postgresql "9.4.1208"]
@@ -14,12 +16,13 @@
                  [hiccup "1.0.5"]
                  ;; middleware
                  [ring/ring-anti-forgery "1.0.0"]
-                 [ring/ring-defaults "0.2.0"]
                  ;; hosted assests
                  [org.webjars/bootstrap "3.3.6"]
                  [org.webjars/font-awesome "4.5.0"]
                  [org.webjars/jquery "2.2.1"]
                  [ring-webjars "0.1.1"]]
+
+  :plugins [[lein-environ "1.0.2"]]
 
   :min-lein-version "2.0.0"
 
@@ -27,5 +30,5 @@
 
   :main listopia.core
 
-  :profiles {:dev
-             {:main listopia.core/-dev-main}})
+  :profiles {:dev {:main listopia.core/-dev-main}
+             :test {}})
