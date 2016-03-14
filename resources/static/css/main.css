@@ -4,13 +4,10 @@
   background: transparent;
 }
 
-.btn-transparent .fa.fa-check-square-o {
-  font-size: 22px;
-  color: #61B329;
-  
+.btn-transparent .fa.fa-check-square {
+   color: #61B329;
 }
 
 .btn-transparent .fa.fa-square-o {
-  font-size: 22px;
-  color: #000;
+  color: #333;
 }

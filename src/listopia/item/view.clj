@@ -55,8 +55,8 @@
     [:div.btn-transparent
      [:div.btn-group
       (if checked
-        [:button.btn.btn-default.btn-xs [:i {:class "fa fa-check-square-o"}]]
-        [:button.btn.btn-default.btn-xs [:i {:class "fa fa-square-o"}]])]]]))
+        [:button.btn.btn-default.btn-xs [:i {:class "fa fa-check-square fa-2x"}]]
+        [:button.btn.btn-default.btn-xs [:i {:class "fa fa-square-o fa-2x"}]])]]]))
 
 (defn items-page [items]
   (html5
