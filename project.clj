@@ -12,6 +12,7 @@
                  ;; database
                  [org.clojure/java.jdbc "0.4.2"]
                  [org.postgresql/postgresql "9.4.1208"]
+                 [com.datomic/datomic-free "0.9.5350"]
                  ;; ui
                  [hiccup "1.0.5"]
                  ;; middleware
