@@ -30,5 +30,6 @@
 
   :main listopia.core
 
-  :profiles {:dev {:main listopia.core/-dev-main}
+  :profiles {:uberjar {:aot :all}
+             :dev {:main listopia.core/-dev-main}
              :test {}})

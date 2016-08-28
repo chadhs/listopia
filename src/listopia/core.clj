@@ -11,7 +11,8 @@
             [ring.middleware.file-info :refer [wrap-file-info]]
             [ring.middleware.session :refer [wrap-session]]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
-            [ring.middleware.webjars :refer [wrap-webjars]]))
+            [ring.middleware.webjars :refer [wrap-webjars]])
+  (:gen-class))
 
 (def app
   (-> routes
