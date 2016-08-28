@@ -1,4 +1,4 @@
-# listopia
+# listopia [![CircleCI](https://circleci.com/gh/chadhs/listopia/tree/master.svg?style=svg)](https://circleci.com/gh/chadhs/listopia/tree/master)
 
 An exploration of web development in Clojure.
 
