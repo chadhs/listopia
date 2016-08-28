@@ -1,0 +1,25 @@
+## customize the test machine
+
+machine:
+  timezone:
+    America/Chicago
+
+
+## deployment settings
+
+### staging
+deployment:
+  staging:
+    branch: staging
+    heroku:
+      appname: listopia-staging
+
+### production
+deployment:
+  production:
+    branch: master
+    heroku:
+      appname: listopia
+
+
+## notifications
