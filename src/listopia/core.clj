@@ -1,10 +1,8 @@
 (ns listopia.core
-  (:require [listopia.item.model :as model :refer [database-url]]
-            [listopia.item.middleware :refer [wrap-db
+  (:require [listopia.item.middleware :refer [wrap-db
                                               wrap-server]]
             [listopia.item.route :refer [routes]])
   (:require [ring.adapter.jetty :as jetty]
-            [environ.core :refer [env]]
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.resource :refer [wrap-resource]]
@@ -27,12 +25,10 @@
 
 (defn -main
   ([] (-main 8000))
-  ([port] (model/create-table! database-url)
-          (jetty/run-jetty app
+  ([port] (jetty/run-jetty app
                            {:port (Integer. port)})))
 
 (defn -dev-main
   ([] (-dev-main 8000))
-  ([port] (model/create-table! database-url)
-          (jetty/run-jetty (wrap-reload #'app)
+  ([port] (jetty/run-jetty (wrap-reload #'app)
                            {:port (Integer. port)})))

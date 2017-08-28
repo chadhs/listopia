@@ -10,8 +10,9 @@
                  ;; environment
                  [environ "1.0.2"]
                  ;; database
-                 [org.clojure/java.jdbc "0.4.2"]
-                 [org.postgresql/postgresql "9.4.1208"]
+                 [org.clojure/java.jdbc "0.7.0"]
+                 [org.postgresql/postgresql "42.1.4"]
+                 [migratus "0.9.9"]
                  ;; ui
                  [hiccup "1.0.5"]
                  ;; middleware
@@ -22,7 +23,12 @@
                  [org.webjars/jquery "2.2.1"]
                  [ring-webjars "0.1.1"]]
 
-  :plugins [[lein-environ "1.0.2"]]
+  :plugins [[lein-environ "1.0.2"]
+            [migratus-lein "0.5.1"]]
+
+  :migratus {:store :database
+             :migration-dir "migrations"
+             :db ~(get (System/getenv) "DATABASE_URL")}
 
   :min-lein-version "2.0.0"
 

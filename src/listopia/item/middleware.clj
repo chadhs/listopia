@@ -1,6 +1,5 @@
 (ns listopia.item.middleware
-  (:require [listopia.item.model :refer [database-url]])
-  (:require [environ.core :refer [env]]))
+  (:require [listopia.db :refer [database-url]]))
 
 (defn wrap-db [hdlr]
   (fn [req]
