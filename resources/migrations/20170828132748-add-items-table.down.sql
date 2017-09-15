@@ -1,3 +1,3 @@
-drop table items;
+drop table if exists items;
 --;;
-drop extension "uuid-ossp";
+drop extension if exists "uuid-ossp";
