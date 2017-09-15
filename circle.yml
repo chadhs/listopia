@@ -7,6 +7,11 @@ machine:
 
 ## deployment settings
 
+### database migrations
+database:
+  override:
+    - lein migratus migrate
+
 ### staging
 deployment:
   staging:
