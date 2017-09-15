@@ -13,7 +13,7 @@ deployment:
     branch: staging
     commands:
       - git push git@heroku.com:listopia-staging.git $CIRCLE_SHA1:refs/heads/master
-      - heroku run lein migratus migrate
+      - heroku run -a listopia-staging lein migratus migrate
 
 ### production
 deployment:
@@ -21,7 +21,7 @@ deployment:
     branch: master
     commands:
       - git push git@heroku.com:listopia.git $CIRCLE_SHA1:refs/heads/master
-      - heroku run lein migratus migrate
+      - heroku run -a listopia lein migratus migrate
 
 
 ## notifications
