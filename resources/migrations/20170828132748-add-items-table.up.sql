@@ -1,6 +1,6 @@
-create extension "uuid-ossp";
+create extension if not exists "uuid-ossp";
 --;;
-create table items (
+create table if not exists items (
 id uuid primary key default uuid_generate_v4(),
 name text not null,
 description text not null,
