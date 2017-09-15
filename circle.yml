@@ -20,6 +20,8 @@ deployment:
     branch: master
     heroku:
       appname: listopia
+    commands:
+      - heroku run lein migratus migrate
 
 
 ## notifications
