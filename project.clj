@@ -10,7 +10,7 @@
                  ;;; environment
                  [environ "1.1.0"]
                  ;;; database
-                 [org.clojure/java.jdbc "0.7.0"]
+                 [com.layerware/hugsql "0.4.7"]
                  [org.postgresql/postgresql "42.1.4"]
                  [migratus "0.9.9"]
                  ;;; ui

@@ -17,7 +17,7 @@
   (let [name (get-in req [:params "name"])
         description (get-in req [:params "description"])
         db database-url
-        item-id (create-item! db name description)]
+        item-id (create-item! db {:name name :description description})]
     {:status 302
      :headers {"Location" "/items"}
      :body ""}))
@@ -25,7 +25,7 @@
 (defn handle-delete-item [req]
   (let [db database-url
         item-id (java.util.UUID/fromString (:item-id (:route-params req)))
-        exists? (delete-item! db item-id)]
+        exists? (delete-item! db {:id item-id})]
     (if exists?
       {:status 302
        :headers {"Location" "/items"}
@@ -38,7 +38,7 @@
   (let [db database-url
         item-id (java.util.UUID/fromString (:item-id (:route-params req)))
         checked (get-in req [:params "checked"])
-        exists? (update-item! db item-id (= "true" checked))]
+        exists? (update-item! db {:id item-id :checked (= "true" checked)})]
     (if exists?
       {:status 302
        :headers {"Location" "/items"}
