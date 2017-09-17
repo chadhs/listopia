@@ -22,7 +22,7 @@ create a `profiles.clj` in the project root (which is ignored by git) to define 
 
 to run locally use `lein run` this will by default start on port 8000, but accepts a port number as an argument as well.
 
-### database migrations
+## database migrations
 
 - the clojure migratus library is used to handle db schema changes.
 - migrations are located in the `resources/migrations` folder.
