@@ -25,20 +25,20 @@
 (defn handle-delete-item [req]
   (let [db database-url
         item-id (java.util.UUID/fromString (:item-id (:route-params req)))
-        exists? (delete-item! db {:id item-id})]
+        exists? (delete-item! db {:item-id item-id})]
     (if exists?
       {:status 302
        :headers {"Location" "/items"}
        :body ""}
       {:status 404
-       :body "List not found."
+       :body "Item not found."
        :headers {}})))
 
 (defn handle-update-item [req]
   (let [db database-url
         item-id (java.util.UUID/fromString (:item-id (:route-params req)))
         checked (get-in req [:params "checked"])
-        exists? (update-item! db {:id item-id :checked (= "true" checked)})]
+        exists? (update-item! db {:item-id item-id :checked (= "true" checked)})]
     (if exists?
       {:status 302
        :headers {"Location" "/items"}
