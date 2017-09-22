@@ -28,20 +28,20 @@
        {:type :submit
         :value "New item"}]]]]))
 
-(defn delete-item-form [id]
+(defn delete-item-form [item-id]
   (html
    [:form
-    {:method "POST" :action (str "/items/delete/" id)}
+    {:method "POST" :action (str "/items/delete/" item-id)}
     (anti-forgery-field)
     [:div.btn-group
      [:input.btn.btn-danger.btn-xs
       {:type :submit
        :value "Delete"}]]]))
 
-(defn update-item-form [id checked]
+(defn update-item-form [item-id checked]
   (html
    [:form
-    {:method "POST" :action (str "/items/update/" id)}
+    {:method "POST" :action (str "/items/update/" item-id)}
     (anti-forgery-field)
     [:input {:type :hidden
              :name "checked"
@@ -81,8 +81,8 @@
          [:tbody
           (for [item items]
             [:tr
-             [:td (delete-item-form (:id item))]
-             [:td (update-item-form (:id item) (:checked item))]
+             [:td (delete-item-form (:item_id item))]
+             [:td (update-item-form (:item_id item) (:checked item))]
              [:td (h (:name item))]
              [:td (h (:description item))]])]]
         [:div.col-sm-offset-1 "There are no items."])]
