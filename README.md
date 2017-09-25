@@ -4,7 +4,7 @@ an exploration of web development in Clojure.
 
 ## usage
 
-Make lists!
+make lists!
 
 ## local dev setup
 
