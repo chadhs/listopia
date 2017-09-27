@@ -1,4 +1,4 @@
-(ns listopia.item.view
+(ns listopia.items.view
   (:require [hiccup.page :refer [html5]]
             [hiccup.core :refer [html h]]
             [ring.util.anti-forgery :refer [anti-forgery-field]]))

@@ -1,4 +1,4 @@
--- src/listopia/item/sql/item.sql
+-- src/listopia/items/sql/items.sql
 -- listopia list item queries
 
 -- :name create-item! :! :n
