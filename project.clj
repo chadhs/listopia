@@ -12,7 +12,7 @@
                  ;;; database
                  [com.layerware/hugsql "0.4.7"]
                  [org.postgresql/postgresql "42.1.4"]
-                 [migratus "0.9.9"]
+                 [migratus "1.0.0"]
                  ;;; ui
                  [hiccup "1.0.5"]
                  ;;; middleware

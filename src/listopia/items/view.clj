@@ -1,4 +1,4 @@
-(ns listopia.item.view
+(ns listopia.items.view
   (:require [hiccup.page :refer [html5]]
             [hiccup.core :refer [html h]]
             [ring.util.anti-forgery :refer [anti-forgery-field]]))
@@ -81,8 +81,8 @@
          [:tbody
           (for [item items]
             [:tr
-             [:td (delete-item-form (:item_id item))]
-             [:td (update-item-form (:item_id item) (:checked item))]
+             [:td (delete-item-form (:id item))]
+             [:td (update-item-form (:id item) (:checked item))]
              [:td (h (:name item))]
              [:td (h (:description item))]])]]
         [:div.col-sm-offset-1 "There are no items."])]

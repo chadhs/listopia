@@ -1,8 +1,8 @@
-(ns listopia.item.route
-  (:require [listopia.item.handler :refer [handle-index-items
-                                           handle-create-item
-                                           handle-delete-item
-                                           handle-update-item]])
+(ns listopia.items.route
+  (:require [listopia.items.handler :refer [handle-index-items
+                                            handle-create-item
+                                            handle-delete-item
+                                            handle-update-item]])
   (:require [compojure.core :refer [defroutes ANY GET POST PUT DELETE]]
             [compojure.route :refer [not-found]]))
 

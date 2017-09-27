@@ -1,10 +1,10 @@
-(ns listopia.item.handler
+(ns listopia.items.handler
   (:require [listopia.db :refer [database-url]]
-            [listopia.item.model :refer [create-item!
-                                         read-items
-                                         update-item!
-                                         delete-item!]]
-            [listopia.item.view :refer [items-page]]))
+            [listopia.items.model :refer [create-item!
+                                          read-items
+                                          update-item!
+                                          delete-item!]]
+            [listopia.items.view :refer [items-page]]))
 
 (defn handle-index-items [req]
   (let [db database-url

@@ -1,7 +1,7 @@
 (ns listopia.core
-  (:require [listopia.item.middleware :refer [wrap-db
-                                              wrap-server]]
-            [listopia.item.route :refer [routes]])
+  (:require [listopia.items.middleware :refer [wrap-db
+                                               wrap-server]]
+            [listopia.items.route :refer [routes]])
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.middleware.params :refer [wrap-params]]

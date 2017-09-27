@@ -1,4 +1,4 @@
-(ns listopia.item.middleware
+(ns listopia.items.middleware
   (:require [listopia.db :refer [database-url]]))
 
 (defn wrap-db [hdlr]
