@@ -1,4 +1,4 @@
-(ns listopia.items.handler
+(ns listopia.items.handlers
   (:require [listopia.db :refer [database-url]]
             [listopia.items.model :refer [create-item!
                                           read-items

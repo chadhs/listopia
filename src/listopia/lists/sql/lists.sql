@@ -12,7 +12,7 @@ returning id
 delete from lists
 where id = :list-id
 
--- :name read-lists:? :*
+-- :name read-lists :? :*
 -- :doc get all lists
-select id, name, description, checked, date_created from lists
+select id, name, description, date_created from lists
 order by date_created
