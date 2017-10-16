@@ -1,7 +1,7 @@
 (ns listopia.core
   (:require [listopia.items.middleware :refer [wrap-db
                                                wrap-server]]
-            [listopia.routes :refer [all-routes]])
+            [listopia.routes :as routes])
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.middleware.params :refer [wrap-params]]
@@ -13,7 +13,7 @@
   (:gen-class))
 
 (def app
-  (-> all-routes
+  (-> routes/combined-routes
       wrap-anti-forgery        ; csrf protection
       wrap-session             ; session data
       wrap-params              ; url-encoded param support

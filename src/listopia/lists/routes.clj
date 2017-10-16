@@ -1,11 +1,18 @@
 (ns listopia.lists.routes
-  (:require [listopia.lists.handlers :refer [handle-index-lists
-                                             handle-create-list
-                                             handle-delete-list]])
-  (:require [compojure.core :refer [defroutes ANY GET POST PUT DELETE]]
-            [compojure.route :refer [not-found]]))
+  (:require [listopia.lists.handlers :as lists.handlers])
+  (:require [compojure.core :refer [defroutes ANY GET POST PUT DELETE]]))
 
-(defroutes list-routes
-  (GET       "/lists"                 [] handle-index-lists)
-  (POST      "/lists"                 [] handle-create-list)
-  (POST      "/lists/delete/:list-id" [] handle-delete-list))
+(defroutes lists-routes
+  (GET  "/lists"                 [] lists.handlers/handle-index-lists)
+  (POST "/lists"                 [] lists.handlers/handle-create-list!)
+  (POST "/lists/delete/:list-id" [] lists.handlers/handle-delete-list!))
+
+
+
+
+
+
+
+
+
+
