@@ -1,13 +1,14 @@
 (ns listopia.items.view
-  (:require [hiccup.page :refer [html5]]
-            [hiccup.core :refer [html h]]
-            [ring.util.anti-forgery :refer [anti-forgery-field]]))
+  (:require [hiccup.core :refer [html]]
+            [hiccup.page :refer [html5]]
+            [hiccup.util :refer [escape-html]]
+            [ring.util.anti-forgery :as anti-forgery]))
 
 (defn new-item []
   (html
    [:form.form-horizontal
     {:method "POST" :action "/items"}
-    (anti-forgery-field)
+    (anti-forgery/anti-forgery-field)
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :name-input}
       "Name"]
@@ -32,7 +33,7 @@
   (html
    [:form
     {:method "POST" :action (str "/items/delete/" item-id)}
-    (anti-forgery-field)
+    (anti-forgery/anti-forgery-field)
     [:div.btn-group
      [:input.btn.btn-danger.btn-xs
       {:type :submit
@@ -42,7 +43,7 @@
   (html
    [:form
     {:method "POST" :action (str "/items/update/" item-id)}
-    (anti-forgery-field)
+    (anti-forgery/anti-forgery-field)
     [:input {:type :hidden
              :name "checked"
              :value (if checked "false" "true")}]
@@ -83,8 +84,8 @@
             [:tr
              [:td (delete-item-form (:id item))]
              [:td (update-item-form (:id item) (:checked item))]
-             [:td (h (:name item))]
-             [:td (h (:description item))]])]]
+             [:td (escape-html (:name item))]
+             [:td (escape-html (:description item))]])]]
         [:div.col-sm-offset-1 "There are no items."])]
      [:div.col-sm-8
       [:h2 "Create a new item"]

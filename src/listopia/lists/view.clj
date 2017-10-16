@@ -1,13 +1,14 @@
 (ns listopia.lists.view
-  (:require [hiccup.page :refer [html5]]
-            [hiccup.core :refer [html h]]
-            [ring.util.anti-forgery :refer [anti-forgery-field]]))
+  (:require [hiccup.core :refer [html]]
+            [hiccup.page :refer [html5]]
+            [hiccup.util :refer [escape-html]]
+            [ring.util.anti-forgery :as anti-forgery]))
 
 (defn new-list []
   (html
    [:form.form-horizontal
     {:method "POST" :action "/lists"}
-    (anti-forgery-field)
+    (anti-forgery/anti-forgery-field)
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :name-input}
       "Name"]
@@ -32,7 +33,7 @@
   (html
    [:form
     {:method "POST" :action (str "/lists/delete/" list-id)}
-    (anti-forgery-field)
+    (anti-forgery/anti-forgery-field)
     [:div.btn-group
      [:input.btn.btn-danger.btn-xs
       {:type :submit
@@ -67,8 +68,8 @@
           (for [list lists]
             [:tr
              [:td (delete-list-form (:id list))]
-             [:td [:a {:href "/lists"} (h (:name list))]]
-             [:td (h (:description list))]])]]
+             [:td [:a {:href "/lists"} (escape-html (:name list))]]
+             [:td (escape-html (:description list))]])]]
         [:div.col-sm-offset-1 "There are no lists."])]
      [:div.col-sm-8
       [:h2 "Create a new list"]
