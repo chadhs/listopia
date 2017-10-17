@@ -1,4 +1,4 @@
-(ns listopia.lists.view
+(ns listopia.list.view
   (:require [hiccup.core :refer [html]]
             [hiccup.page :refer [html5]]
             [hiccup.util :refer [escape-html]]
