@@ -1,6 +1,5 @@
 (ns listopia.core
-  (:require [listopia.items.middleware :refer [wrap-db
-                                               wrap-server]]
+  (:require [listopia.items.middleware :as items.middleware]
             [listopia.routes :as routes])
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.reload :refer [wrap-reload]]
@@ -14,14 +13,14 @@
 
 (def app
   (-> routes/combined-routes
-      wrap-anti-forgery        ; csrf protection
-      wrap-session             ; session data
-      wrap-params              ; url-encoded param support
-      wrap-db                  ; add db/conn string into params
-      wrap-server              ; set server name header
-      (wrap-resource "static") ; set static asset path
-      wrap-file-info           ; add file info to static resources
-      wrap-webjars))           ; set asset path for webjar assets
+      wrap-anti-forgery            ; csrf protection
+      wrap-session                 ; session data
+      wrap-params                  ; url-encoded param support
+      items.middleware/wrap-db     ; add db/conn string into params
+      items.middleware/wrap-server ; set server name header
+      (wrap-resource "static")     ; set static asset path
+      wrap-file-info               ; add file info to static resources
+      wrap-webjars))               ; set asset path for webjar assets
 
 (defn -main
   ([] (-main 8000))
