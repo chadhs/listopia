@@ -3,16 +3,16 @@
 
 -- :name create-list! :! :n
 -- :doc insert a single list
-insert into lists (name, description)
+insert into list (name, description)
 values (:name, :description)
 returning id
 
 -- :name delete-list! :! :n
 -- :doc delete a single list by list_id
-delete from lists
+delete from list
 where id = :list-id
 
 -- :name read-lists :? :*
 -- :doc get all lists
-select id, name, description, date_created from lists
+select id, name, description, date_created from list
 order by date_created
