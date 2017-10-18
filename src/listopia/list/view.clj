@@ -1,8 +1,9 @@
 (ns listopia.list.view
-  (:require [hiccup.core :refer [html]]
-            [hiccup.page :refer [html5]]
-            [hiccup.util :refer [escape-html]]
-            [ring.util.anti-forgery :as anti-forgery]))
+  (:require [hiccup.core            :refer [html]]
+            [hiccup.page            :refer [html5]]
+            [hiccup.util            :refer [escape-html]]
+            [ring.util.anti-forgery :as    anti-forgery]))
+
 
 (defn new-list []
   (html
@@ -29,6 +30,7 @@
        {:type :submit
         :value "New list"}]]]]))
 
+
 (defn delete-list-form [list-id]
   (html
    [:form
@@ -38,6 +40,7 @@
      [:input.btn.btn-danger.btn-xs
       {:type :submit
        :value "Delete"}]]]))
+
 
 (defn lists-page [lists]
   (html5

@@ -1,8 +1,9 @@
 (ns listopia.item.view
-  (:require [hiccup.core :refer [html]]
-            [hiccup.page :refer [html5]]
-            [hiccup.util :refer [escape-html]]
-            [ring.util.anti-forgery :as anti-forgery]))
+  (:require [hiccup.core            :refer [html]]
+            [hiccup.page            :refer [html5]]
+            [hiccup.util            :refer [escape-html]]
+            [ring.util.anti-forgery :as    anti-forgery]))
+
 
 (defn new-item []
   (html
@@ -29,6 +30,7 @@
        {:type :submit
         :value "New item"}]]]]))
 
+
 (defn delete-item-form [item-id]
   (html
    [:form
@@ -38,6 +40,7 @@
      [:input.btn.btn-danger.btn-xs
       {:type :submit
        :value "Delete"}]]]))
+
 
 (defn update-item-form [item-id checked]
   (html
@@ -52,6 +55,7 @@
       (if checked
         [:button.btn.btn-default.btn-xs [:i {:class "fa fa-check-square fa-2x"}]]
         [:button.btn.btn-default.btn-xs [:i {:class "fa fa-square-o fa-2x"}]])]]]))
+
 
 (defn items-page [items]
   (html5
