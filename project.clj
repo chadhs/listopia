@@ -1,8 +1,8 @@
 (defproject listopia "0.3.0-SNAPSHOT"
   :description "make awesome lists"
   :url "https://github.com/chadhs/listopia"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :license {:name "BSD 3-Clause License"
+            :url "https://choosealicense.com/licenses/bsd-3-clause/"}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  ;;; core
                  [ring "1.6.2"]
@@ -18,13 +18,13 @@
                  ;;; middleware
                  [ring/ring-anti-forgery "1.1.0"]
                  ;;; hosted assests
+                 [ring-webjars "0.2.0"]
                  [org.webjars/bootstrap "3.3.7-1"]
                  [org.webjars/font-awesome "4.7.0"]
-                 [org.webjars/jquery "2.2.4"]
-                 [ring-webjars "0.2.0"]]
+                 [org.webjars/jquery "2.2.4"]]
 
   :plugins [[lein-environ "1.1.0"]
-            [migratus-lein "0.5.1"]]
+            [migratus-lein "0.5.2"]]
 
   :migratus {:store :database
              :migration-dir "migrations"
