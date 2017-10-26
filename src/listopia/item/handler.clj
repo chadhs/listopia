@@ -1,7 +1,6 @@
 (ns listopia.item.handler
   (:require [listopia.db         :refer [database-url]]
-            [listopia.item.model :as item.model]
-            [listopia.item.view  :as item.view]))
+            [listopia.item.model :as item.model]))
 
 
 (defn handle-create-item! [req]
