@@ -5,5 +5,6 @@
 
 (defroutes list-routes
   (GET  "/lists"                 [] list.handler/handle-index-lists)
+  (GET  "/lists/:list-id"        [] list.handler/handle-index-list)
   (POST "/lists"                 [] list.handler/handle-create-list!)
   (POST "/lists/delete/:list-id" [] list.handler/handle-delete-list!))

@@ -12,6 +12,15 @@
      :body    (list.view/lists-page lists)}))
 
 
+(defn handle-index-list [req]
+  (let [db      database-url
+        list-id (java.util.UUID/fromString (:list-id (:route-params req)))
+        list    (list.model/read-list db {:list-id list-id})]
+    {:status  200
+     :headers {}
+     :body    (list.view/list-page list)}))
+
+
 (defn handle-create-list! [req]
   (let [name        (get-in req [:params "name"])
         description (get-in req [:params "description"])
