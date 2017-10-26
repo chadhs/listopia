@@ -1,5 +1,6 @@
 (ns listopia.db
-  (:require [environ.core :refer [env]]))
+  (:require [environ.core :as environ]))
+
 
 (def database-url
-  (env :database-url))
+  (environ/env :database-url))

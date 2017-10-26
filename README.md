@@ -41,4 +41,4 @@ you'll need to load an two environment variables in your production environment:
 
 Copyright © 2016 Chad Stovern
 
-Distributed under the Eclipse Public License either version 1.0
+Distributed under the BSD 3-Clause License
