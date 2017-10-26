@@ -24,7 +24,10 @@
                  [org.webjars/jquery "2.2.4"]]
 
   :plugins [[lein-environ "1.1.0"]
+            [lein-ring "0.12.1"]
             [migratus-lein "0.5.2"]]
+
+  :ring {:handler listopia.core/app}
 
   :migratus {:store :database
              :migration-dir "migrations"
