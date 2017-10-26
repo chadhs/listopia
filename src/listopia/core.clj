@@ -17,7 +17,6 @@
       wrap-anti-forgery           ; csrf protection
       wrap-session                ; session data
       wrap-params                 ; url-encoded param support
-      item.middleware/wrap-db     ; add db/conn string into params
       item.middleware/wrap-server ; set server name header
       (wrap-resource "static")    ; set static asset path
       wrap-file-info              ; add file info to static resources

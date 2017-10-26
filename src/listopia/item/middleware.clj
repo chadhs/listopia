@@ -1,12 +1,7 @@
-(ns listopia.item.middleware
-  (:require [listopia.db :refer [database-url]]))
+(ns listopia.item.middleware)
 
 
-(defn wrap-db [hdlr]
-  (fn [req]
-    (hdlr (assoc req :listopia/db database-url))))
-
-
+;; example request modification
 (defn wrap-server [hdlr]
   (fn [req]
     (assoc-in (hdlr req) [:headers "server"] "listopia")))
