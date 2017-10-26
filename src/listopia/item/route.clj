@@ -4,7 +4,6 @@
 
 
 (defroutes item-routes
-  (GET  "/items"                 [] item.handler/handle-index-items)
-  (POST "/items"                 [] item.handler/handle-create-item!)
-  (POST "/items/delete/:item-id" [] item.handler/handle-delete-item!)
-  (POST "/items/update/:item-id" [] item.handler/handle-update-item!))
+  (POST "/item/create"          [] item.handler/handle-create-item!)
+  (POST "/item/delete/:item-id" [] item.handler/handle-delete-item!)
+  (POST "/item/update/:item-id" [] item.handler/handle-update-item!))

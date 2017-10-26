@@ -8,7 +8,7 @@
 (defn new-list []
   (html
    [:form.form-horizontal
-    {:method "POST" :action "/lists"}
+    {:method "POST" :action "/list/create"}
     (anti-forgery/anti-forgery-field)
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :name-input}
@@ -34,7 +34,7 @@
 (defn delete-list-form [list-id]
   (html
    [:form
-    {:method "POST" :action (str "/lists/delete/" list-id)}
+    {:method "POST" :action (str "/list/delete/" list-id)}
     (anti-forgery/anti-forgery-field)
     [:div.btn-group
      [:input.btn.btn-danger.btn-xs
@@ -71,7 +71,7 @@
           (for [list lists]
             [:tr
              [:td (delete-list-form (:id list))]
-             [:td [:a {:href (str "/lists/" (:id list))} (escape-html (:name list))]]
+             [:td [:a {:href (str "/list/" (:id list))} (escape-html (:name list))]]
              [:td (escape-html (:description list))]])]]
         [:div.col-sm-offset-1 "There are no lists."])]
      [:div.col-sm-8
