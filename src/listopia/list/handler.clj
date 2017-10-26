@@ -1,7 +1,8 @@
 (ns listopia.list.handler
-  (:require [listopia.db         :refer [database-url]]
-            [listopia.list.model :as    list.model]
-            [listopia.list.view  :as    list.view]))
+  (:require [listopia.db              :refer [database-url]]
+            [listopia.list.model      :as    list.model]
+            [listopia.list.view.index :as    list.view.index]
+            [listopia.list.view.list  :as    list.view.list]))
 
 
 (defn handle-index-lists [req]
@@ -9,7 +10,7 @@
         lists (list.model/read-lists db)]
     {:status  200
      :headers {}
-     :body    (list.view/lists-page lists)}))
+     :body    (list.view.index/lists-page lists)}))
 
 
 (defn handle-index-list [req]
@@ -18,7 +19,7 @@
         list    (list.model/read-list db {:list-id list-id})]
     {:status  200
      :headers {}
-     :body    (list.view/list-page list)}))
+     :body    (list.view.list/list-page list)}))
 
 
 (defn handle-create-list! [req]
