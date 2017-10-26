@@ -20,6 +20,7 @@ where id = :list-id
 select id, name, description, date_created from list
 order by date_created
 
+
 -- :name read-list :? :n
 -- :doc fetch a single list by list_id
 select id, name, description, date_created from list
