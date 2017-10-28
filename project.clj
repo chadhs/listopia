@@ -16,7 +16,7 @@
                  ;;; ui
                  [hiccup "1.0.5"]
                  ;;; middleware
-                 [ring/ring-anti-forgery "1.1.0"]
+                 [ring/ring-defaults "0.3.1"]
                  ;;; hosted assests
                  [ring-webjars "0.2.0"]
                  [org.webjars/bootstrap "3.3.7-1"]

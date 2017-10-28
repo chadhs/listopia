@@ -1,26 +1,26 @@
 (ns listopia.core
-  (:require [listopia.item.middleware     :as    item.middleware]
-            [listopia.route               :as    route])
-  (:require [ring.adapter.jetty           :as    jetty]
-            [ring.middleware.reload       :refer [wrap-reload]]
-            [ring.middleware.params       :refer [wrap-params]]
-            [ring.middleware.resource     :refer [wrap-resource]]
-            [ring.middleware.file-info    :refer [wrap-file-info]]
-            [ring.middleware.session      :refer [wrap-session]]
-            [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
-            [ring.middleware.webjars      :refer [wrap-webjars]])
+  (:require [listopia.route           :as    route]
+            [listopia.middleware      :as    middleware])
+  (:require [ring.adapter.jetty       :as    jetty]
+            [ring.middleware.defaults :refer :all]
+            [ring.middleware.webjars  :refer [wrap-webjars]]
+            [ring.middleware.reload   :refer [wrap-reload]])
   (:gen-class))
 
 
 (def app
   (-> route/combined-routes
-      wrap-anti-forgery           ; csrf protection
-      wrap-session                ; session data
-      wrap-params                 ; url-encoded param support
-      item.middleware/wrap-server ; set server name header
-      (wrap-resource "static")    ; set static asset path
-      wrap-file-info              ; add file info to static resources
-      wrap-webjars))              ; set asset path for webjar assets
+      ;; wrap-defaults includes ring middleware in the correct order to provide:
+      ;; csrf protection, session data, url parameters, static assets, and more
+      (wrap-defaults 
+       (-> site-defaults
+           ;; disabling content-type injection since we're returning a ring response
+           (assoc-in [:security :content-type-options] false)
+           (assoc-in [:responses :content-types] false)
+           ;; handling this within the application
+           (assoc-in [:params :keywordize] false)))
+      wrap-webjars             ; set path for webjar assets
+      middleware/wrap-server)) ; set server name header
 
 
 (defn -main
