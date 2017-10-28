@@ -1,4 +1,4 @@
-(ns listopia.item.middleware)
+(ns listopia.middleware)
 
 
 ;; example request modification
