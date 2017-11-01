@@ -16,7 +16,8 @@
      [:div.col-sm-10
       [:input#name-input.form-control
        {:name :name
-        :placeholder "Name"}]]]
+        :placeholder "Name"
+        :autofocus true}]]]
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :desc-input}
       "Description"]
