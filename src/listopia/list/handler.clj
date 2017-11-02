@@ -37,7 +37,9 @@
 (defn handle-delete-list! [req]
   (let [db      database-url
         list-id (java.util.UUID/fromString (:list-id (:route-params req)))
-        exists? (list.model/delete-list! db {:list-id list-id})]
+        exists? (do
+                  (item.model/delete-list-items! db {:list-id list-id})
+                  (list.model/delete-list! db {:list-id list-id}))]
     (if exists?
       {:status  302
        :headers {"Location" "/lists"}
