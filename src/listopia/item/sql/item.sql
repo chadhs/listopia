@@ -22,6 +22,12 @@ delete from item
 where id = :item-id
 
 
+-- :name delete-list-items! :! :*
+-- :doc delete all items associated with a single list
+delete from item
+where list_id = :list-id
+
+
 -- :name read-items :? :*
 -- :doc get all list items
 select id, name, description, checked, date_created from item
