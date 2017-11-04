@@ -12,13 +12,7 @@
   (-> route/combined-routes
       ;; wrap-defaults includes ring middleware in the correct order to provide:
       ;; csrf protection, session data, url parameters, static assets, and more
-      (wrap-defaults 
-       (-> site-defaults
-           ;; disabling content-type injection since we're returning a ring response
-           (assoc-in [:security :content-type-options] false)
-           (assoc-in [:responses :content-types] false)
-           ;; handling this within the application
-           (assoc-in [:params :keywordize] false)))
+      (wrap-defaults site-defaults)
       wrap-webjars             ; set path for webjar assets
       middleware/wrap-server)) ; set server name header
 
