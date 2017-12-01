@@ -2,7 +2,7 @@
 -- listopia list queries
 
 
--- :name create-list! :! :n
+-- :name create-list! :? :n
 -- :doc insert a single list
 insert into list (name, description)
 values (:name, :description)
