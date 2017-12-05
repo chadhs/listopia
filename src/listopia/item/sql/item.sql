@@ -28,6 +28,12 @@ delete from item
 where list_id = :list-id
 
 
+-- :name read-item :? :n
+-- :doc get an item by id
+select id, name, description, checked, date_created from item
+where id = :item-id
+
+
 -- :name read-items :? :*
 -- :doc get all list items
 select id, name, description, checked, date_created from item

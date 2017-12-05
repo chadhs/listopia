@@ -32,8 +32,15 @@
   (str (uuid :id)))
 
 
+(defn cs-hugsqluuid->javauuid 
+  "return the java.util.UUID/fromString uuid format from a hugsql uuid map format."
+  [uuid]
+  (uuid :id))
+
+
+;; tests
 (deftest test-create-list
-  (testing "list creation" 
+  (testing "list is created" 
     (is (let [request (cs-http-request-mock
                        :uri "/list/create"
                        :request-method :post
@@ -44,21 +51,23 @@
 
 ;; create a list, fetch id, delete the list
 (deftest delete-list
-  (testing "list deletion"
+  (testing "list is deleted"
     (is (let [db database-url
-              list-id (cs-uuid->str
-                       (list.model/create-list! db {:name "foo" :description "bar"}))
+              list-id (list.model/create-list! db {:name "foo" :description "bar"})
+              list-id-str (cs-uuid->str list-id)
+              list-id-uuid (cs-hugsqluuid->javauuid list-id)
               request (cs-http-request-mock
-                       :uri (str "/list/delete/" list-id)
+                       :uri (str "/list/delete/" list-id-str)
                        :request-method :post
-                       :route-params {:list-id list-id})]
-          (= (get (list.handler/handle-delete-list! request) :status)
-             302)))))
+                       :route-params {:list-id list-id-str})
+              deleted? (= 302 (get (list.handler/handle-delete-list! request) :status))
+              exists? (nil? (list.model/read-list db {:list-id list-id-uuid}))] 
+          (and deleted? exists?)))))
 
 
 ;; create a list, fetch id, create item with list id
 (deftest create-item
-  (testing "item creation"
+  (testing "item is created"
     (is (let [db database-url
               list-id (cs-uuid->str 
                        (list.model/create-list! db {:name "foo" :description "bar"}))
@@ -72,17 +81,59 @@
 
 ;; create a list, fetch id, create item with list id, fetch item id, set checked true
 (deftest check-item
-  (testing "check-item"
-    (is (= :test :test))))
+  (testing "item is marked complete"
+    (is (let [db database-url
+              list-id (list.model/create-list! db {:name "foo" :description "bar"})
+              list-id-str (cs-uuid->str list-id)
+              list-id-uuid (cs-hugsqluuid->javauuid list-id)
+              item-id (item.model/create-item! db {:name "foo" :description "bar" :list-id list-id-uuid})
+              item-id-str (cs-uuid->str item-id)
+              item-id-uuid (cs-hugsqluuid->javauuid item-id)
+              request (cs-http-request-mock
+                       :uri (str "/item/update/" item-id-str)
+                       :request-method :post
+                       :params {:list-id list-id-str :checked "true"}
+                       :route-params {:item-id item-id-str})
+              updated? (= 302 (get (item.handler/handle-update-item! request) :status))
+              checked? (get (item.model/read-item db {:item-id item-id-uuid}) :checked)] 
+          (and updated? checked?)))))
 
 
 ;; create a list, fetch id, create item with list id, fetch item id, set checked false
 (deftest uncheck-item
-  (testing "uncheck-item"
-    (is (= :test :test))))
+  (testing "item is marked incomplete"
+    (is (let [db database-url
+              list-id (list.model/create-list! db {:name "foo" :description "bar"})
+              list-id-str (cs-uuid->str list-id)
+              list-id-uuid (cs-hugsqluuid->javauuid list-id)
+              item-id (item.model/create-item! db {:name "foo" :description "bar" :list-id list-id-uuid})
+              item-id-str (cs-uuid->str item-id)
+              item-id-uuid (cs-hugsqluuid->javauuid item-id)
+              request (cs-http-request-mock
+                       :uri (str "/item/update/" item-id-str)
+                       :request-method :post
+                       :params {:list-id list-id-str :checked "false"}
+                       :route-params {:item-id item-id-str})
+              updated? (= 302 (get (item.handler/handle-update-item! request) :status))
+              unchecked? (false? (get (item.model/read-item db {:item-id item-id-uuid}) :checked))] 
+          (and updated? unchecked?)))))
 
 
 ;; create a list, fetch id, create item with list id, fetch item id, delete item
 (deftest delete-item
-  (testing "delete-item"
-    (is (= :test :test))))
+  (testing "item is deleted"
+    (is (let [db database-url
+              list-id (list.model/create-list! db {:name "foo" :description "bar"})
+              list-id-str (cs-uuid->str list-id)
+              list-id-uuid (cs-hugsqluuid->javauuid list-id)
+              item-id (item.model/create-item! db {:name "foo" :description "bar" :list-id list-id-uuid})
+              item-id-str (cs-uuid->str item-id)
+              item-id-uuid (cs-hugsqluuid->javauuid item-id)
+              request (cs-http-request-mock
+                       :uri (str "/item/delete/" item-id-str)
+                       :request-method :post
+                       :params {:list-id list-id-str}
+                       :route-params {:item-id item-id-str})
+              deleted? (= 302 (get (item.handler/handle-delete-item! request) :status))
+              exists? (nil? (item.model/read-item db {:item-id item-id-uuid}))]
+          (and deleted? exists?)))))
