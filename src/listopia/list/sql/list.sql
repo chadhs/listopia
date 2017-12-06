@@ -3,7 +3,7 @@
 
 
 -- :name create-list! :? :n
--- :doc insert a single list
+-- :doc insert a single list, returning the id, thus the ? in the name rather than ! for execute
 insert into list (name, description)
 values (:name, :description)
 returning id

@@ -3,7 +3,7 @@
 
 
 -- :name create-item! :? :n
--- :doc insert a single list item
+-- :doc insert a single list item, returning the id, thus the ? in the name rather than ! for execute
 insert into item (name, description, list_id)
 values (:name, :description, :list-id)
 returning id
