@@ -1,4 +1,6 @@
-(ns listopia.util.core)
+(ns listopia.util.core
+  (:require [listopia.list.model :as list.model]
+            [listopia.item.model :as item.model]))
 
 
 (defn http-request-mock
@@ -28,3 +30,30 @@
   "return the java.util.UUID/fromString uuid format from a hugsql uuid map format."
   [uuid]
   (uuid :id))
+
+
+(defn generate-test-list
+  "generates a test list returning a map of list-id, list-id-str, and list-id-uuid"
+  [db]
+  (let [list-id (list.model/create-list! db {:name "foo" :description "bar"})
+        list-id-str (uuid->str list-id)
+        list-id-uuid (hugsqluuid->javauuid list-id)]
+    {:list-id list-id 
+     :list-id-str list-id-str 
+     :list-id-uuid list-id-uuid}))
+
+
+(defn generate-test-item
+  "generates a test item returning a map of item-id, item-id-str, and item-id-uuid"
+  [db]
+  (let [test-list (generate-test-list db)
+        list-id-str (get test-list :list-id-str)
+        list-id-uuid (get test-list :list-id-uuid)
+        item-id (item.model/create-item! db {:name "foo" :description "bar" :list-id list-id-uuid})
+        item-id-str (uuid->str item-id)
+        item-id-uuid (hugsqluuid->javauuid item-id)]
+    {:item-id item-id 
+     :item-id-str item-id-str 
+     :item-id-uuid item-id-uuid 
+     :list-id-str list-id-str 
+     :list-id-uuid list-id-uuid}))

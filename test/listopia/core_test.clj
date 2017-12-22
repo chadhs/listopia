@@ -25,13 +25,12 @@
              302)))))
 
 
-;; create a list, fetch id, delete the list
 (deftest delete-list
   (testing "list is deleted"
     (is (let [db database-url
-              list-id (list.model/create-list! db {:name "foo" :description "bar"})
-              list-id-str (util/uuid->str list-id)
-              list-id-uuid (util/hugsqluuid->javauuid list-id)
+              test-list (util/generate-test-list db)
+              list-id-str (get test-list :list-id-str)
+              list-id-uuid (get test-list :list-id-uuid)
               request (util/http-request-mock
                        :uri (str "/list/delete/" list-id-str)
                        :request-method :post
@@ -45,12 +44,12 @@
 (deftest create-item
   (testing "item is created"
     (is (let [db database-url
-              list-id (util/uuid->str 
-                       (list.model/create-list! db {:name "foo" :description "bar"}))
+              test-list (util/generate-test-list db)
+              list-id-str (get test-list :list-id-str)
               request (util/http-request-mock
                        :uri "/item/create"
                        :request-method :post
-                       :params {:name "foo" :description "bar" :list-id list-id})] 
+                       :params {:name "foo" :description "bar" :list-id list-id-str})] 
           (= (get (item.handler/handle-create-item! request) :status)
              302)))))
 
@@ -59,12 +58,10 @@
 (deftest check-item
   (testing "item is marked complete"
     (is (let [db database-url
-              list-id (list.model/create-list! db {:name "foo" :description "bar"})
-              list-id-str (util/uuid->str list-id)
-              list-id-uuid (util/hugsqluuid->javauuid list-id)
-              item-id (item.model/create-item! db {:name "foo" :description "bar" :list-id list-id-uuid})
-              item-id-str (util/uuid->str item-id)
-              item-id-uuid (util/hugsqluuid->javauuid item-id)
+              test-item (util/generate-test-item db)
+              item-id-str (get test-item :item-id-str)
+              item-id-uuid (get test-item :item-id-uuid)
+              list-id-str (get test-item :list-id-str)
               request (util/http-request-mock
                        :uri (str "/item/update/" item-id-str)
                        :request-method :post
@@ -79,12 +76,10 @@
 (deftest uncheck-item
   (testing "item is marked incomplete"
     (is (let [db database-url
-              list-id (list.model/create-list! db {:name "foo" :description "bar"})
-              list-id-str (util/uuid->str list-id)
-              list-id-uuid (util/hugsqluuid->javauuid list-id)
-              item-id (item.model/create-item! db {:name "foo" :description "bar" :list-id list-id-uuid})
-              item-id-str (util/uuid->str item-id)
-              item-id-uuid (util/hugsqluuid->javauuid item-id)
+              test-item (util/generate-test-item db)
+              item-id-str (get test-item :item-id-str)
+              item-id-uuid (get test-item :item-id-uuid)
+              list-id-str (get test-item :list-id-str)
               request (util/http-request-mock
                        :uri (str "/item/update/" item-id-str)
                        :request-method :post
@@ -99,12 +94,10 @@
 (deftest delete-item
   (testing "item is deleted"
     (is (let [db database-url
-              list-id (list.model/create-list! db {:name "foo" :description "bar"})
-              list-id-str (util/uuid->str list-id)
-              list-id-uuid (util/hugsqluuid->javauuid list-id)
-              item-id (item.model/create-item! db {:name "foo" :description "bar" :list-id list-id-uuid})
-              item-id-str (util/uuid->str item-id)
-              item-id-uuid (util/hugsqluuid->javauuid item-id)
+              test-item (util/generate-test-item db)
+              item-id-str (get test-item :item-id-str)
+              item-id-uuid (get test-item :item-id-uuid)
+              list-id-str (get test-item :list-id-str)
               request (util/http-request-mock
                        :uri (str "/item/delete/" item-id-str)
                        :request-method :post
