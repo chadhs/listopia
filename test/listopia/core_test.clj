@@ -5,43 +5,19 @@
             [listopia.list.model   :as    list.model]
             [listopia.list.handler :as    list.handler]
             [listopia.item.model   :as    item.model]
-            [listopia.item.handler :as    item.handler]))
+            [listopia.item.handler :as    item.handler]
+            [listopia.util.core    :as    util]
+            [listopia.util.db      :as    util.db]))
 
 
-;; helper functions
-(defn cs-http-request-mock
-  "creates a request defaulting to http"
-  [& {:keys [scheme server-port uri request-method params route-params]
-      :or {scheme :http server-port 80 request-method :get}}]
-  (let [base-mock {:protocol "HTTP/1.1"
-                   :scheme scheme
-                   :server-port server-port
-                   :server-name "localhost"
-                   :remote-addr "localhost"
-                   :headers {"host" "localhost"}
-                   :uri uri
-                   :request-method request-method}]
-    (cond-> base-mock
-      params (assoc :params params)
-      route-params (assoc :route-params route-params))))
+;; use-fixtures
+;; truncate all tables or derive and drop/create, then migrate
 
 
-(defn cs-uuid->str
-  "return the plain string value of a given uuid."
-  [uuid]
-  (str (uuid :id)))
-
-
-(defn cs-hugsqluuid->javauuid 
-  "return the java.util.UUID/fromString uuid format from a hugsql uuid map format."
-  [uuid]
-  (uuid :id))
-
-
-;; tests
+;; create a list
 (deftest test-create-list
   (testing "list is created" 
-    (is (let [request (cs-http-request-mock
+    (is (let [request (util/http-request-mock
                        :uri "/list/create"
                        :request-method :post
                        :params {:name "foo" :description "bar"})]
@@ -54,9 +30,9 @@
   (testing "list is deleted"
     (is (let [db database-url
               list-id (list.model/create-list! db {:name "foo" :description "bar"})
-              list-id-str (cs-uuid->str list-id)
-              list-id-uuid (cs-hugsqluuid->javauuid list-id)
-              request (cs-http-request-mock
+              list-id-str (util/uuid->str list-id)
+              list-id-uuid (util/hugsqluuid->javauuid list-id)
+              request (util/http-request-mock
                        :uri (str "/list/delete/" list-id-str)
                        :request-method :post
                        :route-params {:list-id list-id-str})
@@ -69,9 +45,9 @@
 (deftest create-item
   (testing "item is created"
     (is (let [db database-url
-              list-id (cs-uuid->str 
+              list-id (util/uuid->str 
                        (list.model/create-list! db {:name "foo" :description "bar"}))
-              request (cs-http-request-mock
+              request (util/http-request-mock
                        :uri "/item/create"
                        :request-method :post
                        :params {:name "foo" :description "bar" :list-id list-id})] 
@@ -84,12 +60,12 @@
   (testing "item is marked complete"
     (is (let [db database-url
               list-id (list.model/create-list! db {:name "foo" :description "bar"})
-              list-id-str (cs-uuid->str list-id)
-              list-id-uuid (cs-hugsqluuid->javauuid list-id)
+              list-id-str (util/uuid->str list-id)
+              list-id-uuid (util/hugsqluuid->javauuid list-id)
               item-id (item.model/create-item! db {:name "foo" :description "bar" :list-id list-id-uuid})
-              item-id-str (cs-uuid->str item-id)
-              item-id-uuid (cs-hugsqluuid->javauuid item-id)
-              request (cs-http-request-mock
+              item-id-str (util/uuid->str item-id)
+              item-id-uuid (util/hugsqluuid->javauuid item-id)
+              request (util/http-request-mock
                        :uri (str "/item/update/" item-id-str)
                        :request-method :post
                        :params {:list-id list-id-str :checked "true"}
@@ -104,12 +80,12 @@
   (testing "item is marked incomplete"
     (is (let [db database-url
               list-id (list.model/create-list! db {:name "foo" :description "bar"})
-              list-id-str (cs-uuid->str list-id)
-              list-id-uuid (cs-hugsqluuid->javauuid list-id)
+              list-id-str (util/uuid->str list-id)
+              list-id-uuid (util/hugsqluuid->javauuid list-id)
               item-id (item.model/create-item! db {:name "foo" :description "bar" :list-id list-id-uuid})
-              item-id-str (cs-uuid->str item-id)
-              item-id-uuid (cs-hugsqluuid->javauuid item-id)
-              request (cs-http-request-mock
+              item-id-str (util/uuid->str item-id)
+              item-id-uuid (util/hugsqluuid->javauuid item-id)
+              request (util/http-request-mock
                        :uri (str "/item/update/" item-id-str)
                        :request-method :post
                        :params {:list-id list-id-str :checked "false"}
@@ -124,12 +100,12 @@
   (testing "item is deleted"
     (is (let [db database-url
               list-id (list.model/create-list! db {:name "foo" :description "bar"})
-              list-id-str (cs-uuid->str list-id)
-              list-id-uuid (cs-hugsqluuid->javauuid list-id)
+              list-id-str (util/uuid->str list-id)
+              list-id-uuid (util/hugsqluuid->javauuid list-id)
               item-id (item.model/create-item! db {:name "foo" :description "bar" :list-id list-id-uuid})
-              item-id-str (cs-uuid->str item-id)
-              item-id-uuid (cs-hugsqluuid->javauuid item-id)
-              request (cs-http-request-mock
+              item-id-str (util/uuid->str item-id)
+              item-id-uuid (util/hugsqluuid->javauuid item-id)
+              request (util/http-request-mock
                        :uri (str "/item/delete/" item-id-str)
                        :request-method :post
                        :params {:list-id list-id-str}
