@@ -10,7 +10,13 @@
             [listopia.util.db      :as    util.db]))
 
 
-;; TODO: consider use-fixtures in future
+;; ensure a clean db state for each test
+(defn test-db-reset [f]
+  (let [db database-url]
+    (util.db/test-clear-db! db)
+    (f)
+    (util.db/test-clear-db! db)))
+(use-fixtures :each test-db-reset)
 
 
 ;; create a list
