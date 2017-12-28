@@ -30,8 +30,8 @@ jobs:
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
           
       ## debug
-      - run: sudo -u postgres printenv PATH
-      - run: sudo -u postgres psql -l
+      - run: sudo printenv PATH
+      # - run: sudo -u postgres psql -l
 
       # - run:
       #     name: database initialization
