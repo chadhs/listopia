@@ -2,8 +2,8 @@
 -- listopia list item queries
 
 
--- :name create-item! :! :n
--- :doc insert a single list item
+-- :name create-item! :? :n
+-- :doc insert a single list item, returning the id, thus the ? in the name rather than ! for execute
 insert into item (name, description, list_id)
 values (:name, :description, :list-id)
 returning id
@@ -26,6 +26,12 @@ where id = :item-id
 -- :doc delete all items associated with a single list
 delete from item
 where list_id = :list-id
+
+
+-- :name read-item :? :n
+-- :doc get an item by id
+select id, name, description, checked, date_created from item
+where id = :item-id
 
 
 -- :name read-items :? :*

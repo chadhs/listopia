@@ -20,7 +20,7 @@ create a `profiles.clj` in the project root (which is ignored by git) to define 
 {:dev {:env {:database-url "jdbc:postgresql://localhost/listopia-dev"}}}
 ```
 
-to run locally use `lein run` this will by default start on port 8000, but accepts a port number as an argument as well.
+to run locally use `lein run` this will start on port 8000 by default, but accepts a port number as an argument as well.
 
 ## database migrations
 
@@ -33,7 +33,7 @@ to run locally use `lein run` this will by default start on port 8000, but accep
 
 ## production setup
 
-you'll need to load an two environment variables in your production environment:
+you'll need to load two environment variables in your production environment:
 
 `DATABASE_URL` and `PORT`
 
