@@ -36,11 +36,17 @@ jobs:
           name: database initialization
           command: lein migratus migrate
 
-      # - run: lein do test, uberjar
+      - run: 
+          name: run tests
+          command: lein test
 
-      # - store_artifacts:
-      #     path: target/listopia.jar
-      #     destination: uberjar
+      - run: 
+          name: build uberjar
+          command: lein uberjar
+
+      - store_artifacts:
+          path: target/listopia.jar
+          destination: uberjar
         
       
 
