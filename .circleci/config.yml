@@ -10,73 +10,85 @@ jobs:
         environment:
           POSTGRES_USER: listopia
           POSTGRES_DB: listopia-test
-          POSTGRES_PASSWORDS: ""
+          POSTGRES_PASSWORD: ""
     environment:
       LEIN_ROOT: nbd
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
-
       - restore_cache:
           key: listopia-{{ checksum "project.clj" }}
-
       - run: lein deps
-
       - save_cache:
           paths:
             - ~/.m2
             - ~/.lein
           key: listopia-{{ checksum "project.clj" }}
-
       - run: 
           name: wait for db
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
-          
       - run:
           name: database initialization
           command: lein migratus migrate
-
       - run: 
           name: run tests
           command: lein test
-
       - run: 
           name: build uberjar
           command: lein uberjar
-
       - store_artifacts:
           path: target/listopia.jar
           destination: uberjar
-        
-      
+          
+  deploy-stage:
+    working_directory: /tmp/listopia
+    docker:
+      - image: circleci/clojure:lein-2.7.1
+    steps:
+      - run:
+          name: setup heroku
+          command: bash .circleci/setup-heroku.sh
+      - add_ssh_keys:
+          fingerprints:
+            - "ad:5b:ff:2c:db:5c:c7:c3:a2:0b:a4:6e:53:3d:3b:21"
+      - run:
+          name: deploy staging to heroku
+          command: |
+            git push git@heroku.com:listopia-staging.git $CIRCLE_SHA1:refs/heads/master
+            heroku run -a listopia lein migratus migrate
 
-      
-# v1      
-      
-## customize the test machine
-
-# machine:
-#   timezone:
-#     America/Chicago
-
-
-## deployment settings
-
-### staging
-# deployment:
-#   staging:
-#     branch: staging
-#     commands:
-#       - git push git@heroku.com:listopia-staging.git $CIRCLE_SHA1:refs/heads/master
-#       - heroku run -a listopia-staging lein migratus migrate
-
-### production
-# deployment:
-#   production:
-#     branch: master
-#     commands:
-#       - git push git@heroku.com:listopia.git $CIRCLE_SHA1:refs/heads/master
-#       - heroku run -a listopia lein migratus migrate
-
-
-## notifications
+  deploy-prod:
+    working_directory: /tmp/listopia
+    docker:
+      - image: circleci/clojure:lein-2.7.1
+    steps:
+      - run:
+          name: setup heroku
+          command: bash .circleci/setup-heroku.sh
+      - add_ssh_keys:
+          fingerprints:
+            - "ad:5b:ff:2c:db:5c:c7:c3:a2:0b:a4:6e:53:3d:3b:21"
+      - run:
+          name: deploy master to heroku
+          command: |
+            git push git@heroku.com:listopia.git $CIRCLE_SHA1:refs/heads/master
+            heroku run -a listopia lein migratus migrate
+              
+              
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy-stage:
+          requires:
+            - build
+          filters:
+            branches:
+              only: staging
+      - deploy-prod:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
