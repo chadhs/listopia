@@ -10,6 +10,7 @@ jobs:
     environment:
       LEIN_ROOT: nbd
       JVM_OPTS: -Xmx3200m
+      # DATABASE_URL: jdbc:postgresql://localhost/listopia-test
     steps:
       - checkout
 
@@ -31,6 +32,7 @@ jobs:
       - run:
           name: database initialization
           command: |
+            psql -l
             lein with-profile test migratus migrate
 
       - run: lein do test, uberjar
