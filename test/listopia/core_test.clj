@@ -10,8 +10,7 @@
             [listopia.util.db      :as    util.db]))
 
 
-;; use-fixtures
-;; truncate all tables or derive and drop/create, then migrate
+;; TODO: consider use-fixtures in future
 
 
 ;; create a list
