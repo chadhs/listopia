@@ -10,7 +10,7 @@ jobs:
     environment:
       LEIN_ROOT: nbd
       JVM_OPTS: -Xmx3200m
-      # DATABASE_URL: jdbc:postgresql://localhost/listopia-test
+      DATABASE_URL: jdbc:postgresql://localhost/listopia-test
     steps:
       - checkout
 
@@ -31,6 +31,7 @@ jobs:
           
       ## debug
       - run: sudo printenv PATH
+      - run: sudo printenv DATABASE_URL
       # - run: sudo -u postgres psql -l
 
       # - run:
