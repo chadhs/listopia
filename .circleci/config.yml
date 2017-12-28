@@ -32,6 +32,7 @@ jobs:
       - run:
           name: database initialization
           command: |
+            which psql
             psql -l
             lein with-profile test migratus migrate
 
