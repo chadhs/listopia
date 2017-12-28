@@ -45,6 +45,7 @@ jobs:
     docker:
       - image: circleci/clojure:lein-2.7.1
     steps:
+      - checkout
       - run:
           name: setup heroku
           command: bash .circleci/setup-heroku.sh
@@ -62,6 +63,7 @@ jobs:
     docker:
       - image: circleci/clojure:lein-2.7.1
     steps:
+      - checkout
       - run:
           name: setup heroku
           command: bash .circleci/setup-heroku.sh
