@@ -41,7 +41,7 @@ jobs:
           destination: uberjar
           
   deploy-stage:
-    working_directory: /tmp/listopia
+    working_directory: ~/listopia
     docker:
       - image: circleci/clojure:lein-2.7.1
     steps:
@@ -58,7 +58,7 @@ jobs:
             heroku run -a listopia lein migratus migrate
 
   deploy-prod:
-    working_directory: /tmp/listopia
+    working_directory: ~/listopia
     docker:
       - image: circleci/clojure:lein-2.7.1
     steps:
