@@ -1,0 +1,72 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/listopia
+    docker:
+      - image: circleci/clojure:lein-2.7.1
+      - image: circleci/postgres:9.5-alpine
+    environment:
+      LEIN_ROOT: nbd
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: listopia-{{ checksum "project.clj" }}
+
+      - run: lein deps
+
+      - save_cache:
+          paths:
+            - ~/.m2
+            - ~/.lein
+          key: listopia-{{ checksum "project.clj" }}
+
+      - run: 
+          name: wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+          
+      - run:
+          name: database setup
+          command: |
+            createdb listopia-test
+            lein migratus migrate
+
+      - run: lein do test, uberjar
+
+      - store_artifacts:
+          path: target/listopia.jar
+          destination: uberjar
+        
+      
+
+      
+# v1      
+      
+## customize the test machine
+
+# machine:
+#   timezone:
+#     America/Chicago
+
+
+## deployment settings
+
+### staging
+# deployment:
+#   staging:
+#     branch: staging
+#     commands:
+#       - git push git@heroku.com:listopia-staging.git $CIRCLE_SHA1:refs/heads/master
+#       - heroku run -a listopia-staging lein migratus migrate
+
+### production
+# deployment:
+#   production:
+#     branch: master
+#     commands:
+#       - git push git@heroku.com:listopia.git $CIRCLE_SHA1:refs/heads/master
+#       - heroku run -a listopia lein migratus migrate
+
+
+## notifications
