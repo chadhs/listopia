@@ -29,18 +29,19 @@ jobs:
           name: wait for db
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
           
-      - run:
-          name: database initialization
-          command: |
-            which psql
-            psql -l
-            lein with-profile test migratus migrate
+      ## debug
+      - run: which psql
+      - run: psql -l
 
-      - run: lein do test, uberjar
+      # - run:
+      #     name: database initialization
+      #     command: lein with-profile test migratus migrate
 
-      - store_artifacts:
-          path: target/listopia.jar
-          destination: uberjar
+      # - run: lein do test, uberjar
+
+      # - store_artifacts:
+      #     path: target/listopia.jar
+      #     destination: uberjar
         
       
 
