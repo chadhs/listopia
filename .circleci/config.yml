@@ -30,8 +30,7 @@ jobs:
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
           
       ## debug
-      - run: which psql
-      - run: psql -l
+      - run: sudo psql -l
 
       # - run:
       #     name: database initialization
