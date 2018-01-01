@@ -2,5 +2,5 @@
   (:require [environ.core :as environ]))
 
 
-(def database-url
+(def db-url
   (environ/env :database-url))
