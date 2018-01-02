@@ -35,7 +35,8 @@
         :value "New item"}]]]]))
 
 
-(defn delete-item-form [item-id list-id]
+(defn delete-item-form
+  [{:keys [item-id list-id]}]
   (html
    [:form
     {:method "POST" :action (str "/item/delete/" item-id)}
@@ -49,7 +50,8 @@
        :value "Delete"}]]]))
 
 
-(defn update-item-form [item-id checked list-id]
+(defn update-item-form
+  [{:keys [item-id checked list-id]}]
   (html
    [:form
     {:method "POST" :action (str "/item/update/" item-id)}
@@ -67,7 +69,8 @@
         [:button.btn.btn-default.btn-xs [:i {:class "fa fa-square-o fa-2x"}]])]]]))
 
 
-(defn list-page [list list-id list-items]
+(defn list-page
+  [{:keys [list list-id list-items]}]
   (html5
    {:lang :en}
    [:head
@@ -98,8 +101,11 @@
          [:tbody
           (for [item list-items]
             [:tr
-             [:td (delete-item-form (:id item) list-id)]
-             [:td (update-item-form (:id item) (:checked item) list-id)]
+             [:td (delete-item-form {:item-id (:id item)
+                                     :list-id list-id})]
+             [:td (update-item-form {:item-id (:id item)
+                                     :checked (:checked item)
+                                     :list-id list-id})]
              [:td (escape-html (:name item))]
              [:td (escape-html (:description item))]])]]
         [:div.col-sm-offset-1 "There are no items in this list."])]
