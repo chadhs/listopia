@@ -16,7 +16,9 @@
   (let [list-id    (java.util.UUID/fromString (:list-id (:route-params req)))
         list       (list.model/read-list db-url {:list-id list-id})
         list-items (item.model/read-list-items db-url {:list-id list-id})]
-    (list.view.list/list-page list list-id list-items)))
+    (list.view.list/list-page {:list       list
+                               :list-id    list-id
+                               :list-items list-items})))
 
 
 (defn handle-create-list! [req]
