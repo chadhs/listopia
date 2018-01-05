@@ -1,7 +1,7 @@
 (ns listopia.core-test
   (:require [clojure.test          :refer :all])
   (:require [listopia.core         :refer :all]
-            [listopia.db           :refer [db-url]]
+            [listopia.config       :refer [db-url]]
             [listopia.list.model   :as    list.model]
             [listopia.list.handler :as    list.handler]
             [listopia.item.model   :as    item.model]

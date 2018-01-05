@@ -1,5 +1,5 @@
 (ns listopia.item.handler
-  (:require [listopia.db         :refer [db-url]]
+  (:require [listopia.config     :refer [db-url]]
             [listopia.item.model :as    item.model])
   (:require [ring.util.response  :as    response]))
 
