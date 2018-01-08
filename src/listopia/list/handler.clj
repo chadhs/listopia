@@ -3,7 +3,8 @@
             [listopia.list.model      :as    list.model]
             [listopia.item.model      :as    item.model]
             [listopia.list.view.index :as    list.view.index]
-            [listopia.list.view.list  :as    list.view.list])
+            [listopia.list.view.list  :as    list.view.list]
+            [listopia.util.core       :as    util])
   (:require [ring.util.response       :as    response]
             [taoensso.timbre          :as    timbre]))
 
@@ -26,7 +27,7 @@
   (let [name        (get-in req [:params :name])
         description (get-in req [:params :description])
         list-id     (list.model/create-list! db-url {:name name :description description})]
-    (timbre/info (str "list created: " list-id))
+    (timbre/info (str "list created: " (util/uuid->str list-id)))
     (response/redirect "/lists")))
 
 
