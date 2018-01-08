@@ -10,8 +10,20 @@
 
 
 ;; logging config
+(def reported-log-level
+  (keyword (environ/env :reported-log-level)))
+
+
+(def log-appender
+  (environ/env :log-appender))
+
+
 (defn configure-logging []
   (timbre/merge-config!
    {:appenders
-    {:sentry-appender
-     (sentry/sentry-appender (environ/env :sentry-dsn))}}))
+    (cond (= "println" log-appender)
+          {:println {:output-fn :inherit}}
+          (= "sentry" log-appender)
+          {:sentry-appender (merge
+                             (sentry/sentry-appender (environ/env :sentry-dsn))
+                             {:min-level reported-log-level})})}))
