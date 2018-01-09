@@ -18,6 +18,14 @@ create a `profiles.clj` in the project root (which is ignored by git) to define 
 
 ```clojure
 {:dev {:env {:database-url "jdbc:postgresql://localhost/listopia-dev"}}}
+{:dev
+ {:env
+  {:database-url "jdbc:postgresql://localhost/listopia-dev"
+   :reported-log-level "debug"}}
+ :test
+ {:env
+  {:database-url "jdbc:postgresql://localhost/listopia-test"
+   :reported-log-level "debug"}}}
 ```
 
 to run locally use `lein run` this will start on port 8000 by default, but accepts a port number as an argument as well.
@@ -33,9 +41,16 @@ to run locally use `lein run` this will start on port 8000 by default, but accep
 
 ## production setup
 
-you'll need to load two environment variables in your production environment:
+you'll need to load the following environment variables in your production environment:
 
-`DATABASE_URL` and `PORT`
+- `DATABASE_URL`
+- `PORT`
+
+optionally you can customize the following variables in your production environment:
+
+- `REPORTED_LOG_LEVEL` (defaults to "warn"; set's min level to write to production log)
+- `LOG_APPENDER` (options "println" "sentry")
+- `SENTRY_DSN` (required only if you've set log-appender to "sentry")
 
 ## license
 

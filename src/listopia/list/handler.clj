@@ -1,10 +1,12 @@
 (ns listopia.list.handler
-  (:require [listopia.db              :refer [db-url]]
+  (:require [listopia.config          :refer [db-url]]
             [listopia.list.model      :as    list.model]
             [listopia.item.model      :as    item.model]
             [listopia.list.view.index :as    list.view.index]
-            [listopia.list.view.list  :as    list.view.list])
-  (:require [ring.util.response       :as    response]))
+            [listopia.list.view.list  :as    list.view.list]
+            [listopia.util.core       :as    util])
+  (:require [ring.util.response       :as    response]
+            [taoensso.timbre          :as    timbre]))
 
 
 (defn handle-index-lists [req]
@@ -25,6 +27,7 @@
   (let [name        (get-in req [:params :name])
         description (get-in req [:params :description])
         list-id     (list.model/create-list! db-url {:name name :description description})]
+    (timbre/info (str "list created: " (util/uuid->str list-id)))
     (response/redirect "/lists")))
 
 
@@ -34,5 +37,9 @@
                   (item.model/delete-list-items! db-url {:list-id list-id})
                   (list.model/delete-list! db-url {:list-id list-id}))]
     (if exists?
-      (response/redirect "/lists")
-      (response/not-found "List not found."))))
+      (do
+        (timbre/info (str "list deleted: " list-id))
+        (response/redirect "/lists"))
+      (do
+        (timbre/error (str "list delete failed list id not found: " list-id))
+        (response/not-found "List not found.")))))

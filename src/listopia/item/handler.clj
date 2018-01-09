@@ -1,7 +1,9 @@
 (ns listopia.item.handler
-  (:require [listopia.db         :refer [db-url]]
-            [listopia.item.model :as    item.model])
-  (:require [ring.util.response  :as    response]))
+  (:require [listopia.config     :refer [db-url]]
+            [listopia.item.model :as    item.model]
+            [listopia.util.core  :as    util])
+  (:require [ring.util.response  :as    response]
+            [taoensso.timbre     :as    timbre]))
 
 
 (defn handle-create-item! [req]
@@ -13,6 +15,7 @@
                      {:name        name
                       :description description
                       :list-id     list-id})]
+    (timbre/info (str "item created: " (util/uuid->str item-id)))
     (response/redirect (str "/list/" list-id))))
 
 
@@ -21,8 +24,12 @@
         list-id (java.util.UUID/fromString (get-in req [:params :list-id]))
         exists? (item.model/delete-item! db-url {:item-id item-id})]
     (if exists?
-      (response/redirect (str "/list/" list-id))
-      (response/not-found "Item not found."))))
+      (do
+        (timbre/info (str "item deleted: " item-id))
+        (response/redirect (str "/list/" list-id)))
+      (do
+        (timbre/error (str "item delete failed item id not found: " item-id))
+        (response/not-found "Item not found.")))))
 
 
 (defn handle-update-item! [req]
@@ -31,5 +38,9 @@
         checked (get-in req [:params :checked])
         exists? (item.model/update-item! db-url {:item-id item-id :checked (= "true" checked)})]
     (if exists?
-      (response/redirect (str "/list/" list-id))
-      (response/not-found "Item not found."))))
+      (do
+        (timbre/info (str "item updated: " item-id))
+        (response/redirect (str "/list/" list-id)))
+      (do
+        (timbre/error (str "item update failed item id not found: " item-id))
+        (response/not-found "Item not found.")))))

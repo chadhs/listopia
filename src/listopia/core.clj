@@ -1,11 +1,15 @@
 (ns listopia.core
   (:require [listopia.route           :as    route]
-            [listopia.middleware      :as    middleware])
+            [listopia.middleware      :as    middleware]
+            [listopia.config          :as    config])
   (:require [ring.adapter.jetty       :as    jetty]
             [ring.middleware.defaults :refer :all]
             [ring.middleware.webjars  :refer [wrap-webjars]]
             [ring.middleware.reload   :refer [wrap-reload]])
   (:gen-class))
+
+
+(config/configure-logging)
 
 
 (def app
