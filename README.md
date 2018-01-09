@@ -54,6 +54,6 @@ optionally you can customize the following variables in your production environm
 
 ## license
 
-Copyright © 2016 Chad Stovern
+Copyright © Chad Stovern
 
 Distributed under the BSD 3-Clause License
