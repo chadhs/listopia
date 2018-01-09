@@ -11,19 +11,19 @@
 
 ;; logging config
 (def reported-log-level
-  (keyword (environ/env :reported-log-level)))
+  (keyword (or (environ/env :reported-log-level) "warn")))
 
 
 (def log-appender
-  (environ/env :log-appender))
+  (or (environ/env :log-appender) "println"))
 
 
 (defn configure-logging []
   (timbre/merge-config!
    {:appenders
-    (cond (= "println" log-appender)
-          {:println {:output-fn :inherit}}
-          (= "sentry" log-appender)
-          {:sentry-appender (merge
-                             (sentry/sentry-appender (environ/env :sentry-dsn))
-                             {:min-level reported-log-level})})}))
+    (cond
+      (= "println" log-appender) {:println {:output-fn :inherit}}
+      (= "sentry" log-appender)  {:sentry-appender
+                                  (merge
+                                   (sentry/sentry-appender (environ/env :sentry-dsn))
+                                   {:min-level reported-log-level})})}))
