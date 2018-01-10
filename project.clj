@@ -1,4 +1,4 @@
-(defproject listopia "0.3.0-SNAPSHOT"
+(defproject listopia "0.7.0-SNAPSHOT"
   :description "make awesome lists"
   :url "https://github.com/chadhs/listopia"
   :license {:name "BSD 3-Clause License"
