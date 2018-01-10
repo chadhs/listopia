@@ -16,6 +16,8 @@
                  ;;; logging
                  [com.taoensso/timbre "4.10.0"]
                  [raven-clj "1.5.1"] ; timbre sentry support
+                 ;;; security
+                 [buddy "2.0.0"]
                  ;;; ui
                  [hiccup "1.0.5"]
                  ;;; middleware
