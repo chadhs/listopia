@@ -1,7 +1,35 @@
 (ns listopia.home.view.login
   (:require [hiccup.core            :refer [html]]
             [hiccup.page            :refer [html5]]
-            [hiccup.util            :refer [escape-html]]))
+            [hiccup.util            :refer [escape-html]]
+            [ring.util.anti-forgery :as    anti-forgery]))
+
+
+(defn login-form []
+  (html
+   [:form.form-horizontal
+    {:method "POST" :action "/secure/login"}
+    (anti-forgery/anti-forgery-field)
+    [:div.form-group
+     [:label.control-label.col-sm-2 {:for :email-input}
+      "Email"]
+     [:div.col-sm-10
+      [:input#email-input.form-control
+       {:name :email
+        :placeholder "email"
+        :autofocus true}]]]
+    [:div.form-group
+     [:label.control-label.col-sm-2 {:for :password-input}
+      "Password"]
+     [:div.col-sm-10
+      [:input#password-input.form-control
+       {:name :password
+        :placeholder "password"}]]]
+    [:div.form-group
+     [:div.col-sm-offset-2.col-sm-10
+      [:input.btn.btn-primary
+       {:type :submit
+        :value "Login"}]]]]))
 
 
 (defn login-page []
@@ -20,6 +48,8 @@
    [:body
     [:div.container
      [:h1 "Listopia"]
-     [:p "login"]]
+     [:div.col-sm-8
+      [:h2 "Login"]
+      (login-form)]]
     [:script {:src "/assets/jquery/jquery.min.js"}]
     [:script {:src "/assets/bootstrap/js/bootstrap.min.js"}]]))

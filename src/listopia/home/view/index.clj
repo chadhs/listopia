@@ -20,6 +20,9 @@
    [:body
     [:div.container
      [:h1 "Listopia"]
-     [:p "Welcome; sign up or login for great glory!"]]
+     [:p "Welcome; login or sign up for great glory!"]
+     [:p "More cool marketing information about how great Listopia is..."]
+     [:a.btn.btn-primary {:href "/login"} "login"]
+     [:a.btn.btn-success {:href "/register"} "register"]]
     [:script {:src "/assets/jquery/jquery.min.js"}]
     [:script {:src "/assets/bootstrap/js/bootstrap.min.js"}]]))
