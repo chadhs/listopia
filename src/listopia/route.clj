@@ -1,5 +1,6 @@
 (ns listopia.route
   (:require [listopia.home.route   :as    home.route]
+            [listopia.auth.route   :as    auth.route]
             [listopia.item.route   :as    item.route]
             [listopia.list.route   :as    list.route]
             [listopia.list.handler :as    list.handler]
@@ -18,6 +19,7 @@
   ;; core-routes last so the not-found call is the last matching route
   (compojure/routes
    home.route/home-routes
+   auth.route/auth-routes
    item.route/item-routes
    list.route/list-routes
    core-routes))

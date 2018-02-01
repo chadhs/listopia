@@ -7,7 +7,7 @@
 (defn register-form []
   (html
    [:form.form-horizontal
-    {:method "POST" :action "/secure/register"}
+    {:method "POST" :action "/auth/register"}
     (anti-forgery/anti-forgery-field)
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :email-input}

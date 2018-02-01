@@ -8,7 +8,7 @@
 (defn login-form []
   (html
    [:form.form-horizontal
-    {:method "POST" :action "/secure/login"}
+    {:method "POST" :action "/auth/login"}
     (anti-forgery/anti-forgery-field)
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :email-input}
