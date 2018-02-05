@@ -9,16 +9,16 @@
 (defn handle-auth-register! [req]
   (let [email       (get-in req [:params :email])
         password    (get-in req [:params :password])
-        ;; user-id     (auth.model/create-user! db-url {:email email :password password})
+        ;; account-id     (auth.model/create-account! db-url {:email email :password password})
         ]
-    ;; (timbre/info (str "user created: " (util/uuid->str user-id)))
+    ;; (timbre/info (str "account created: " (util/uuid->str account-id)))
     (response/redirect "/login")))
 
 
 (defn handle-auth-login [req]
   (let [email       (get-in req [:params :email])
         password    (get-in req [:params :password])
-        ;; user-id     (auth.model/auth-user db-url {:email email :password password})
+        ;; account-id     (auth.model/auth-account db-url {:email email :password password})
         ]
-    ;; (timbre/info (str "user authenticated successfully: " (util/uuid->str user-id)))
+    ;; (timbre/info (str "account authenticated successfully: " (util/uuid->str account-id)))
     (response/redirect "/lists")))
