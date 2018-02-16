@@ -24,7 +24,8 @@
      [:div.col-sm-10
       [:input#password-input.form-control
        {:name :password
-        :placeholder "password"}]]]
+        :placeholder "password"
+        :type "password"}]]]
     [:div.form-group
      [:div.col-sm-offset-2.col-sm-10
       [:input.btn.btn-primary
