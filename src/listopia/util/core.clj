@@ -38,8 +38,8 @@
   (let [list-id (list.model/create-list! db {:name "foo" :description "bar"})
         list-id-str (uuid->str list-id)
         list-id-uuid (hugsqluuid->javauuid list-id)]
-    {:list-id list-id 
-     :list-id-str list-id-str 
+    {:list-id list-id
+     :list-id-str list-id-str
      :list-id-uuid list-id-uuid}))
 
 
@@ -52,8 +52,8 @@
         item-id (item.model/create-item! db {:name "foo" :description "bar" :list-id list-id-uuid})
         item-id-str (uuid->str item-id)
         item-id-uuid (hugsqluuid->javauuid item-id)]
-    {:item-id item-id 
-     :item-id-str item-id-str 
-     :item-id-uuid item-id-uuid 
-     :list-id-str list-id-str 
+    {:item-id item-id
+     :item-id-str item-id-str
+     :item-id-uuid item-id-uuid
+     :list-id-str list-id-str
      :list-id-uuid list-id-uuid}))
