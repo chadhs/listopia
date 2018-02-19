@@ -17,6 +17,12 @@
        {:name :email
         :placeholder "email"
         :autofocus true}]]]
+    [:label.control-label.col-sm-2 {:for :display-name-input}
+     "Display Name"]
+    [:div.col-sm-10
+     [:input#display-name-input.form-control
+      {:name :display-name
+       :placeholder "your name"}]]
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :password-input}
       "Password"]
@@ -27,7 +33,7 @@
         :type "password"}]]
      [:div.col-sm-5
       [:input#password-confirm.form-control
-       {:name :password-confirm
+       {:name :passconfirm
         :placeholder "confirm"
         :type "password"}]]]
     [:div.form-group

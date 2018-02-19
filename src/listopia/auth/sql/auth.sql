@@ -9,13 +9,13 @@ values (:email, :display-name, :password-hash)
 returning id
 
 
--- :name auth-account:? :n
+-- :name auth-account :? :n
 -- :doc fetch an account by email, returning the password hash
 select id, email, password_hash from account
 where email = :account-email
 
 
--- :name read-account:? :n
+-- :name read-account :? :n
 -- :doc fetch an account's info by account id
 select id, email, display_name, date_created from account
 where id = :account-id
