@@ -30,13 +30,20 @@
 (defn handle-auth-login [req]
   (let [email      (get-in req [:params :email])
         password   (get-in req [:params :password])
-        account-id (auth.model/auth-account db-url {:account-email email})]
-    (if (and
-         (= email (get account-id :email))
-         (= password (get account-id :password_hash)))
-      (do
-        (timbre/info (str "account authenticated successfully: " (util/uuid->str account-id)))
-        (response/redirect "/lists"))
-      (do
-        (timbre/error (str "account authentication failed for: " (util/uuid->str account-id)))
-        (response/redirect "/login")))))
+        hashcalc   password
+        authfacts  (auth.model/read-account-auth-facts db-url {:account-email email})
+        account-id (get authfacts :id)
+        email      (get authfacts :email)
+        passhash   (get authfacts :password_hash)]
+    (cond (= hashcalc passhash)
+          (do
+            (timbre/info (str "account authenticated successfully: " account-id " : " email))
+            (response/redirect "/lists"))
+          (nil? account-id)
+          (do
+            (timbre/error (str "account authentication failed: invalid account-id"))
+            (response/redirect "/login"))
+          :else
+          (do
+            (timbre/error (str "account authentication failed for: " account-id " : " email))
+            (response/redirect "/login")))))
