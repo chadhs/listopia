@@ -9,8 +9,14 @@
 
 
 (defn handle-home-login [req]
-  (home.view.login/login-page))
+  (let [error? (:error (:route-params req))]
+    (if error?
+      (home.view.login/login-page error?)
+      (home.view.login/login-page))))
 
 
 (defn handle-home-register [req]
-  (home.view.register/register-page))
+  (let [error? (:error (:route-params req))]
+    (if error?
+      (home.view.register/register-page error?)
+      (home.view.register/register-page))))

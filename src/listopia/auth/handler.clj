@@ -11,20 +11,23 @@
         password     (get-in req [:params :password])
         passconfirm  (get-in req [:params :passconfirm])
         display-name (get-in req [:params :display-name])
-        account-id   (when (= password passconfirm)
+        account-id   (when (and (= password passconfirm) (not-empty email) (not-empty password))
                        (auth.model/create-account!
                         db-url {:email email
                                 :password-hash password
                                 :display-name display-name}))]
-    (if account-id
-      (do
-        (timbre/info (str "account created: " (util/uuid->str account-id)))
-        (response/redirect "/login"))
-      (do
-        (timbre/error (str "account creation failed for: " email))
-        ;; this is broken
-        ;; (response/not-found "passwords do not match try again")
-        (response/redirect "/register")))))
+    (cond (not-empty account-id)
+          (do
+            (timbre/info (str "account created: " (util/uuid->str account-id)))
+            (response/redirect "/login"))
+          (not= password passconfirm)
+          (do
+            (timbre/error (str "account creation failed due to password mismatch for: " email))
+            (response/redirect "/register/error/password"))
+          :else
+          (do
+            (timbre/error (str "account creation failed for: " email))
+            (response/redirect "/register/error/register")))))
 
 
 (defn handle-auth-login [req]
@@ -42,8 +45,8 @@
           (nil? account-id)
           (do
             (timbre/error (str "account authentication failed: invalid account-id"))
-            (response/redirect "/login"))
+            (response/redirect "/login/error/login"))
           :else
           (do
             (timbre/error (str "account authentication failed for: " account-id " : " email))
-            (response/redirect "/login")))))
+            (response/redirect "/login/error/login")))))

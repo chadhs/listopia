@@ -17,12 +17,13 @@
        {:name :email
         :placeholder "email"
         :autofocus true}]]]
-    [:label.control-label.col-sm-2 {:for :display-name-input}
-     "Display Name"]
-    [:div.col-sm-10
-     [:input#display-name-input.form-control
-      {:name :display-name
-       :placeholder "your name"}]]
+    [:div.form-group
+     [:label.control-label.col-sm-2 {:for :display-name-input}
+      "Display Name"]
+     [:div.col-sm-10
+      [:input#display-name-input.form-control
+       {:name :display-name
+        :placeholder "your name"}]]]
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :password-input}
       "Password"]
@@ -43,7 +44,18 @@
         :value "Register"}]]]]))
 
 
-(defn register-page []
+(defn register-error?
+  "populate an error message on page when error? is true"
+  [& error]
+  (when error
+    (let [error-arg (str (first (flatten error)))
+          error-msg (cond (= error-arg "password") "passwords do not match"
+                          :else                    "registration error")]
+      (html [:div.alert.alert-danger {:role "alert"} error-msg ", please try again."]))))
+
+
+(defn register-page
+  [& error]
   (html5
    {:lang :en}
    [:head
@@ -61,6 +73,7 @@
      [:h1 "Listopia"]
      [:div.col-sm-8
       [:h2 "Register"]
+      (when error (register-error? error))
       (register-form)]]
     [:script {:src "/assets/jquery/jquery.min.js"}]
     [:script {:src "/assets/bootstrap/js/bootstrap.min.js"}]]))

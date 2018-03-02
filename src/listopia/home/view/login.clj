@@ -33,7 +33,14 @@
         :value "Login"}]]]]))
 
 
-(defn login-page []
+(defn login-error?
+  "populate an error message on page when error? is true"
+  [& error]
+  (when error (html [:div.alert.alert-danger {:role "alert"} "login error, please try again."])))
+
+
+(defn login-page
+  [& error]
   (html5
    {:lang :en}
    [:head
@@ -51,6 +58,7 @@
      [:h1 "Listopia"]
      [:div.col-sm-8
       [:h2 "Login"]
+      (when error (login-error? error))
       (login-form)]]
     [:script {:src "/assets/jquery/jquery.min.js"}]
     [:script {:src "/assets/bootstrap/js/bootstrap.min.js"}]]))
