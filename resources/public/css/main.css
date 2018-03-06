@@ -1,5 +1,9 @@
 /* main.css */
 
+a.site-title {
+  text-decoration: none;
+  color: #333;
+}
 
 /* button spacing for home page */
 a.btn.btn-primary {

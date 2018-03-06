@@ -1,8 +1,8 @@
 (ns listopia.home.view.login
-  (:require [hiccup.core            :refer [html]]
-            [hiccup.page            :refer [html5]]
-            [hiccup.util            :refer [escape-html]]
-            [ring.util.anti-forgery :as    anti-forgery]))
+  (:require [listopia.home.view.layout :as home.view.layout])
+  (:require [hiccup.core               :refer [html]]
+            [hiccup.util               :refer [escape-html]]
+            [ring.util.anti-forgery    :as    anti-forgery]))
 
 
 (defn login-form []
@@ -17,7 +17,8 @@
       [:input#email-input.form-control
        {:name :email
         :placeholder "email"
-        :autofocus true}]]]
+        :autofocus true
+        :required true}]]]
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :password-input}
       "Password"]
@@ -25,7 +26,8 @@
       [:input#password-input.form-control
        {:name :password
         :placeholder "password"
-        :type "password"}]]]
+        :type "password"
+        :required true}]]]
     [:div.form-group
      [:div.col-sm-offset-2.col-sm-10
       [:input.btn.btn-primary
@@ -41,24 +43,9 @@
 
 (defn login-page
   [& error]
-  (html5
-   {:lang :en}
-   [:head
-    [:title "listopia"]
-    [:meta {:name :viewport
-            :content "width=device-width, initial-scale=1.0"}]
-    [:link {:href "/assets/bootstrap/css/bootstrap.min.css"
-            :rel :stylesheet}]
-    [:link {:href "/assets/font-awesome/css/font-awesome.min.css"
-            :rel :stylesheet}]
-    [:link {:href "/css/main.css"
-            :rel :stylesheet}]]
-   [:body
-    [:div.container
-     [:h1 "Listopia"]
-     [:div.col-sm-8
-      [:h2 "Login"]
-      (when error (login-error? error))
-      (login-form)]]
-    [:script {:src "/assets/jquery/jquery.min.js"}]
-    [:script {:src "/assets/bootstrap/js/bootstrap.min.js"}]]))
+  (home.view.layout/page-layout
+   (html
+    [:div.col-sm-8
+     [:h2 "Login"]
+     (when error (login-error? error))
+     (login-form)])))
