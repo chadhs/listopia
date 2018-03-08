@@ -1,6 +1,6 @@
 (ns listopia.list.view.list
+  (:require [listopia.home.view.layout :as home.view.layout])
   (:require [hiccup.core            :refer [html]]
-            [hiccup.page            :refer [html5]]
             [hiccup.util            :refer [escape-html]]
             [ring.util.anti-forgery :as    anti-forgery]))
 
@@ -71,46 +71,31 @@
 
 (defn list-page
   [{:keys [list list-id list-items]}]
-  (html5
-   {:lang :en}
-   [:head
-    [:title "listopia"]
-    [:meta {:name :viewport
-            :content "width=device-width, initial-scale=1.0"}]
-    [:link {:href "/assets/bootstrap/css/bootstrap.min.css"
-            :rel :stylesheet}]
-    [:link {:href "/assets/font-awesome/css/font-awesome.min.css"
-            :rel :stylesheet}]
-    [:link {:href "/css/main.css"
-            :rel :stylesheet}]]
-   [:body
-    [:div.container
-     [:h1 "Listopia"]
-     [:a {:href "/lists"} "<< back to lists"]
-     [:h2 (:name list)]
-     [:h3 (:description list)]
-     [:div.row
-      (if (seq list-items)
-        [:table.table.table-striped
-         [:thead
-          [:tr
-           [:th.col-sm-2]
-           [:th.col-sm-2]
-           [:th "Name"]
-           [:th "Description"]]]
-         [:tbody
-          (for [item list-items]
-            [:tr
-             [:td (delete-item-form {:item-id (:id item)
-                                     :list-id list-id})]
-             [:td (update-item-form {:item-id (:id item)
-                                     :checked (:checked item)
-                                     :list-id list-id})]
-             [:td (escape-html (:name item))]
-             [:td (escape-html (:description item))]])]]
-        [:div.col-sm-offset-1 "There are no items in this list."])]
-     [:div.col-sm-8
-      [:h2 "Create a new item"]
-      (new-item list-id)]]
-    [:script {:src "/assets/jquery/jquery.min.js"}]
-    [:script {:src "/assets/bootstrap/js/bootstrap.min.js"}]]))
+  (home.view.layout/page-layout
+   (html
+    [:a {:href "/lists"} "<< back to lists"]
+    [:h2 (:name list)]
+    [:h3 (:description list)]
+    [:div.row
+     (if (seq list-items)
+       [:table.table.table-striped
+        [:thead
+         [:tr
+          [:th.col-sm-2]
+          [:th.col-sm-2]
+          [:th "Name"]
+          [:th "Description"]]]
+        [:tbody
+         (for [item list-items]
+           [:tr
+            [:td (delete-item-form {:item-id (:id item)
+                                    :list-id list-id})]
+            [:td (update-item-form {:item-id (:id item)
+                                    :checked (:checked item)
+                                    :list-id list-id})]
+            [:td (escape-html (:name item))]
+            [:td (escape-html (:description item))]])]]
+       [:div.col-sm-offset-1 "There are no items in this list."])]
+    [:div.col-sm-8
+     [:h2 "Create a new item"]
+     (new-item list-id)])))

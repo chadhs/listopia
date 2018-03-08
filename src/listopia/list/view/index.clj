@@ -1,6 +1,6 @@
 (ns listopia.list.view.index
+  (:require [listopia.home.view.layout :as home.view.layout])
   (:require [hiccup.core            :refer [html]]
-            [hiccup.page            :refer [html5]]
             [hiccup.util            :refer [escape-html]]
             [ring.util.anti-forgery :as    anti-forgery]))
 
@@ -43,40 +43,26 @@
        :value "Delete"}]]]))
 
 
-(defn lists-page [lists]
-  (html5
-   {:lang :en}
-   [:head
-    [:title "listopia"]
-    [:meta {:name :viewport
-            :content "width=device-width, initial-scale=1.0"}]
-    [:link {:href "/assets/bootstrap/css/bootstrap.min.css"
-            :rel :stylesheet}]
-    [:link {:href "/assets/font-awesome/css/font-awesome.min.css"
-            :rel :stylesheet}]
-    [:link {:href "/css/main.css"
-            :rel :stylesheet}]]
-   [:body
-    [:div.container
-     [:h1 "Listopia"]
-     [:h2 "My Lists"]
-     [:div.row
-      (if (seq lists)
-        [:table.table.table-striped
-         [:thead
-          [:tr
-           [:th.col-sm-2]
-           [:th "Name"]
-           [:th "Description"]]]
-         [:tbody
-          (for [list lists]
-            [:tr
-             [:td (delete-list-form (:id list))]
-             [:td [:a {:href (str "/list/" (:id list))} (escape-html (:name list))]]
-             [:td (escape-html (:description list))]])]]
-        [:div.col-sm-offset-1 "There are no lists."])]
-     [:div.col-sm-8
-      [:h2 "Create a new list"]
-      (new-list)]]
-    [:script {:src "/assets/jquery/jquery.min.js"}]
-    [:script {:src "/assets/bootstrap/js/bootstrap.min.js"}]]))
+(defn lists-page
+  [lists]
+  (home.view.layout/page-layout
+   (html
+    [:h2 "My Lists"]
+    [:div.row
+     (if (seq lists)
+       [:table.table.table-striped
+        [:thead
+         [:tr
+          [:th.col-sm-2]
+          [:th "Name"]
+          [:th "Description"]]]
+        [:tbody
+         (for [list lists]
+           [:tr
+            [:td (delete-list-form (:id list))]
+            [:td [:a {:href (str "/list/" (:id list))} (escape-html (:name list))]]
+            [:td (escape-html (:description list))]])]]
+       [:div.col-sm-offset-1 "There are no lists."])]
+    [:div.col-sm-8
+     [:h2 "Create a new list"]
+     (new-list)])))
