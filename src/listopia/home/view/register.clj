@@ -20,11 +20,11 @@
         :required true}]]]
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :display-name-input}
-      "Display Name"]
+      "Name"]
      [:div.col-sm-10
       [:input#display-name-input.form-control
        {:name :display-name
-        :placeholder "your name"}]]]
+        :placeholder "what you'd like to be called"}]]]
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :password-input}
       "Password"]
@@ -32,14 +32,23 @@
       [:input#password-input.form-control
        {:name :password
         :placeholder "password"
+        :aria-describedby "passwordhelp"
         :type "password"
-        :required true}]]
+        :pattern ".{8,32}"
+        :required true}]
+      [:p {:id "passwordhelp"
+           :class "form-text text-muted"}
+       "password length must be 8-32"]]
      [:div.col-sm-5
       [:input#password-confirm.form-control
        {:name :passconfirm
         :placeholder "confirm"
+        :aria-describedby "passwordhelp"
         :type "password"
-        :required true}]]]
+        :required true}]
+      [:p {:id "passwordhelp"
+           :class "form-text text-muted"}
+       "re-enter your password to confirm"]]]
     [:div.form-group
      [:div.col-sm-offset-2.col-sm-10
       [:input.btn.btn-success
