@@ -1,4 +1,4 @@
-(ns listopia.home.view.login
+(ns listopia.auth.view.login
   (:require [listopia.home.view.layout :as home.view.layout])
   (:require [hiccup.core               :refer [html]]
             [hiccup.util               :refer [escape-html]]
@@ -8,7 +8,7 @@
 (defn login-form []
   (html
    [:form.form-horizontal
-    {:method "POST" :action "/auth/login"}
+    {:method "POST" :action "/login"}
     (anti-forgery/anti-forgery-field)
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :email-input}
@@ -36,9 +36,14 @@
 
 
 (defn login-error?
-  "populate an error message on page when error? is true"
-  [& error]
-  (when error (html [:div.alert.alert-danger {:role "alert"} "login error, please try again."])))
+  "populate an error message on page."
+  [error]
+  (let [error        (first error)
+        error-prefix (cond (= error :account-id) "invalid email or password"
+                           (= error :password)   "invalid email or password"
+                           :else                 "invalid email or password")
+        error-msg    (str error-prefix ", please try again.")]
+    (html [:div.alert.alert-danger {:role "alert"} error-msg])))
 
 
 (defn login-page

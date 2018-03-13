@@ -4,5 +4,7 @@
 
 
 (defroutes auth-routes
-  (POST "/auth/login"    [] auth.handler/handle-auth-login)
-  (POST "/auth/register" [] auth.handler/handle-auth-register!))
+  (GET  "/login"              [& error] auth.handler/handle-auth-login-page)
+  (POST "/login"              []        auth.handler/handle-auth-login)
+  (GET  "/register"           [& error] auth.handler/handle-auth-register-page)
+  (POST "/register"           []        auth.handler/handle-auth-register!))

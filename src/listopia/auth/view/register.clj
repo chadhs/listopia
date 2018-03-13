@@ -1,4 +1,4 @@
-(ns listopia.home.view.register
+(ns listopia.auth.view.register
   (:require [listopia.home.view.layout :as home.view.layout])
   (:require [hiccup.core               :refer [html]]
             [hiccup.util               :refer [escape-html]]
@@ -7,7 +7,7 @@
 (defn register-form []
   (html
    [:form.form-horizontal
-    {:method "POST" :action "/auth/register"}
+    {:method "POST" :action "/register"}
     (anti-forgery/anti-forgery-field)
     [:div.form-group
      [:label.control-label.col-sm-2 {:for :email-input}
@@ -57,13 +57,15 @@
 
 
 (defn register-error?
-  "populate an error message on page when error? is true"
-  [& error]
-  (when error
-    (let [error-arg (str (first (flatten error)))
-          error-msg (cond (= error-arg "password") "passwords do not match"
-                          :else                    "registration error")]
-      (html [:div.alert.alert-danger {:role "alert"} error-msg ", please try again."]))))
+  "populate an error message on page."
+  [error]
+  (let [error     (first error)
+        error-msg (cond (= error :valid-email)    "please enter a valid email address"
+                        (= error :valid-password) "invalid password choice, please try again"
+                        (= error :password-match) "passwords do not match, please try again"
+                        (= error :registered)     "this email is already registered, please login"
+                        :else                     "registration error, please try again")]
+    (html [:div.alert.alert-danger {:role "alert"} error-msg])))
 
 
 (defn register-page
