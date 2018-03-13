@@ -5,19 +5,21 @@
             [listopia.auth.view.register :as    auth.view.register]
             [listopia.auth.view.login    :as    auth.view.login])
   (:require [ring.util.response          :as    response]
-            [taoensso.timbre             :as    timbre]))
+            [taoensso.timbre             :as    timbre]
+            [buddy.hashers               :as    hashers]))
 
 
 (defn handle-auth-register! [req]
   (let [email          (get-in req [:params :email])
         password       (get-in req [:params :password])
+        passhash       (hashers/derive password {:alg :bcrypt+sha512})
         display-name   (get-in req [:params :display-name])
         params         (get req :params)
         register-error (get (util/valid-registration? {:params params :db db-url}) :error)
         account-id     (when (nil? register-error)
                          (auth.model/create-account!
                           db-url {:email email
-                                  :password-hash password
+                                  :password-hash passhash
                                   :display-name display-name}))]
     (if (not-empty account-id)
       (do
@@ -33,12 +35,12 @@
 (defn handle-auth-login [req]
   (let [email       (get-in req [:params :email])
         password    (get-in req [:params :password])
-        hashcalc    password
         authfacts   (auth.model/read-account-auth-facts db-url {:account-email email})
         account-id  (get authfacts :id)
         passhash    (get authfacts :password_hash)
-        login-error (cond (nil? account-id)        :account-id
-                          (not= hashcalc passhash) :password)]
+        hashcalc    (hashers/check password passhash)
+        login-error (cond (nil? account-id) :account-id
+                          (false? hashcalc) :password)]
     (if (nil? login-error)
       (do
         (timbre/info (str "account authenticated successfully: " account-id " : " email))
