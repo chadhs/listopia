@@ -10,9 +10,9 @@
                  ;;; environment
                  [environ "1.1.0"]
                  ;;; database
-                 [com.layerware/hugsql "0.4.7"]
-                 [org.postgresql/postgresql "42.1.4"]
-                 [migratus "1.0.0"]
+                 [com.layerware/hugsql "0.4.9"]
+                 [org.postgresql/postgresql "42.2.2"]
+                 [migratus "1.0.6"]
                  ;;; logging
                  [com.taoensso/timbre "4.10.0"]
                  [raven-clj "1.5.1"] ; timbre sentry support
