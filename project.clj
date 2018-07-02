@@ -6,7 +6,7 @@
   :dependencies [[org.clojure/clojure "1.9.0"]
                  ;;; core
                  [ring "1.6.3"]
-                 [compojure "1.6.1"]
+                 [compojure "1.6.0"]
                  ;;; environment
                  [environ "1.1.0"]
                  ;;; database
@@ -29,8 +29,8 @@
                  [org.webjars/jquery "2.2.4"]]
 
   :plugins [[lein-environ "1.1.0"]
-            [lein-ring "0.12.1"]
-            [migratus-lein "0.5.2"]]
+            [lein-ring "0.12.4"]
+            [migratus-lein "0.5.7"]]
 
   :ring {:handler listopia.core/app}
 
