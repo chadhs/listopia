@@ -3,10 +3,10 @@
   :url "https://github.com/chadhs/listopia"
   :license {:name "BSD 3-Clause License"
             :url "https://choosealicense.com/licenses/bsd-3-clause/"}
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :dependencies [[org.clojure/clojure "1.9.0"]
                  ;;; core
-                 [ring "1.6.2"]
-                 [compojure "1.6.0"]
+                 [ring "1.6.3"]
+                 [compojure "1.6.1"]
                  ;;; environment
                  [environ "1.1.0"]
                  ;;; database
@@ -15,13 +15,13 @@
                  [migratus "1.0.6"]
                  ;;; logging
                  [com.taoensso/timbre "4.10.0"]
-                 [raven-clj "1.5.1"] ; timbre sentry support
+                 [raven-clj "1.5.2"] ; timbre sentry support
                  ;;; security
                  [buddy "2.0.0"]
                  ;;; ui
                  [hiccup "1.0.5"]
                  ;;; middleware
-                 [ring/ring-defaults "0.3.1"]
+                 [ring/ring-defaults "0.3.2"]
                  ;;; hosted assests
                  [ring-webjars "0.2.0"]
                  [org.webjars/bootstrap "3.3.7-1"]
