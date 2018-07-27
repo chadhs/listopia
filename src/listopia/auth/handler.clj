@@ -44,7 +44,10 @@
     (if (nil? login-error)
       (do
         (timbre/info (str "account authenticated successfully: " account-id " : " email))
-        (response/redirect "/lists"))
+        (let [session     (get req :session)
+              new-session (assoc session :user-id account-id)]
+          (-> (response/redirect "/lists")
+              (assoc :session new-session))))
       (do
         (timbre/error (str "account authentication failure reason " login-error " " account-id " : " email))
         {:status 200

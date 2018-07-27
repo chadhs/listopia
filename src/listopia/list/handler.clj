@@ -10,7 +10,8 @@
 
 
 (defn handle-index-lists [req]
-  (let [lists (list.model/read-lists db-url)]
+  (let [user-id (get-in req [:session :user-id])
+        lists   (list.model/read-lists db-url {:user-id user-id})]
     (list.view.index/lists-page lists)))
 
 
@@ -24,9 +25,10 @@
 
 
 (defn handle-create-list! [req]
-  (let [name        (get-in req [:params :name])
+  (let [user-id     (get-in req [:session :user-id])
+        name        (get-in req [:params :name])
         description (get-in req [:params :description])
-        list-id     (list.model/create-list! db-url {:name name :description description})]
+        list-id     (list.model/create-list! db-url {:name name :description description :user-id user-id})]
     (timbre/info (str "list created: " (util/uuid->str list-id)))
     (response/redirect "/lists")))
 
