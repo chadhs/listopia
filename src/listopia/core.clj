@@ -24,10 +24,10 @@
 (defn -main
   ([]     (-main 8000))
   ([port] (jetty/run-jetty app
-                           {:port (int port)})))
+                           {:port (Integer. port)})))
 
 
 (defn -dev-main
   ([]     (-dev-main 8000))
   ([port] (jetty/run-jetty (wrap-reload #'app)
-                           {:port (int port)})))
+                           {:port (Integer. port)})))
