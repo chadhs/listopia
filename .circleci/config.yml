@@ -24,22 +24,22 @@ jobs:
             - ~/.m2
             - ~/.lein
           key: listopia-{{ checksum "project.clj" }}
-      - run: 
+      - run:
           name: wait for db
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: database initialization
           command: lein migratus migrate
-      - run: 
+      - run:
           name: run tests
           command: lein test
-      - run: 
+      - run:
           name: build uberjar
           command: lein uberjar
       - store_artifacts:
           path: target/listopia.jar
           destination: uberjar
-          
+
   deploy-stage:
     working_directory: ~/listopia
     docker:
@@ -75,8 +75,8 @@ jobs:
           command: |
             git push git@heroku.com:listopia.git $CIRCLE_SHA1:refs/heads/master
             heroku run -a listopia lein migratus migrate
-              
-              
+
+
 workflows:
   version: 2
   build-deploy:

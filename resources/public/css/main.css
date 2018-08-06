@@ -1,4 +1,23 @@
 /* main.css */
+
+a.site-title {
+  text-decoration: none;
+  color: #333;
+}
+
+/* button spacing for home page */
+a.btn.btn-primary {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+a.btn.btn-success {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+
+/* checklist styling for lists */
 .btn-transparent .btn.btn-default.btn-xs {
   border: 0 none;
   background: transparent;
