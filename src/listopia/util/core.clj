@@ -20,7 +20,7 @@
 ;; test cases
 (defn http-request-mock
   "creates a request defaulting to http"
-  [& {:keys [scheme server-port uri request-method params route-params]
+  [& {:keys [scheme server-port uri request-method params route-params session]
       :or {scheme :http server-port 80 request-method :get}}]
   (let [base-mock {:protocol "HTTP/1.1"
                    :scheme scheme
@@ -32,13 +32,14 @@
                    :request-method request-method}]
     (cond-> base-mock
       params (assoc :params params)
-      route-params (assoc :route-params route-params))))
+      route-params (assoc :route-params route-params)
+      session (assoc :session session))))
 
 
 (defn generate-test-list
   "generates a test list returning a map of list-id, list-id-str, and list-id-uuid"
-  [db]
-  (let [list-id (list.model/create-list! db {:name "foo" :description "bar"})
+  [db user-id]
+  (let [list-id (list.model/create-list! db {:name "foo" :description "bar" :user-id user-id})
         list-id-str (uuid->str list-id)
         list-id-uuid (hugsqluuid->javauuid list-id)]
     {:list-id list-id
@@ -48,8 +49,8 @@
 
 (defn generate-test-item
   "generates a test item returning a map of item-id, item-id-str, and item-id-uuid"
-  [db]
-  (let [test-list (generate-test-list db)
+  [db user-id]
+  (let [test-list (generate-test-list db user-id)
         list-id-str (get test-list :list-id-str)
         list-id-uuid (get test-list :list-id-uuid)
         item-id (item.model/create-item! db {:name "foo" :description "bar" :list-id list-id-uuid})
