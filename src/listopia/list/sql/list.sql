@@ -24,5 +24,5 @@ order by date_created
 
 -- :name read-list :? :n
 -- :doc fetch a single list by list_id
-select id, name, description, date_created from list
-where id = :list-id
+select id, name, description, user_id, date_created from list
+where id = :list-id and user_id = :user-id

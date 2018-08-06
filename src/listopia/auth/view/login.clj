@@ -39,8 +39,9 @@
   "populate an error message on page."
   [error]
   (let [error        (first error)
-        error-prefix (cond (= error :account-id) "invalid email or password"
-                           (= error :password)   "invalid email or password"
+        error-prefix (cond (= error :account-id)   "invalid email or password"
+                           (= error :password)     "invalid email or password"
+                           (= error :unauthorized) "unauthorized"
                            :else                 "invalid email or password")
         error-msg    (str error-prefix ", please try again.")]
     (html [:div.alert.alert-danger {:role "alert"} error-msg])))

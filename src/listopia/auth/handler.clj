@@ -45,7 +45,7 @@
       (do
         (timbre/info (str "account authenticated successfully: " account-id " : " email))
         (let [session     (get req :session)
-              new-session (assoc session :user-id account-id)]
+              new-session (assoc session :identity account-id)]
           (-> (response/redirect "/lists")
               (assoc :session new-session))))
       (do
