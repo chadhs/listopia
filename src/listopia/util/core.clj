@@ -1,7 +1,7 @@
 (ns listopia.util.core
-  (:require [listopia.list.model :as    list.model]
-            [listopia.item.model :as    item.model]
-            [listopia.auth.model :as    auth.model]))
+  (:require [listopia.list.model :as list.model]
+            [listopia.item.model :as item.model]
+            [listopia.auth.model :as auth.model]))
 
 
 ;; general
