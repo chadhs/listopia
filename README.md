@@ -4,7 +4,7 @@ an exploration of web development in Clojure.
 
 ## usage
 
-make lists!
+register, login, and make lists!
 
 ## local dev setup
 
@@ -17,7 +17,6 @@ createdb listopia-dev
 create a `profiles.clj` in the project root (which is ignored by git) to define your local dev database connection.  an example would look like this:
 
 ```clojure
-{:dev {:env {:database-url "jdbc:postgresql://localhost/listopia-dev"}}}
 {:dev
  {:env
   {:database-url "jdbc:postgresql://localhost/listopia-dev"
@@ -28,7 +27,7 @@ create a `profiles.clj` in the project root (which is ignored by git) to define 
    :reported-log-level "debug"}}}
 ```
 
-to run locally use `lein run` this will start on port 8000 by default, but accepts a port number as an argument as well.
+to run locally (after migrations have been run, see below) use `lein run` this will start on port 8000 by default, but accepts a port number as an argument as well.  to run interactively for local development run `lein ring server` to continually apply code changes as you develop.
 
 ## database migrations
 
