@@ -9,6 +9,11 @@
   (environ/env :database-url))
 
 
+;; session cookie security config
+(def session-cookie-key
+  (environ/env :session-cookie-key))
+
+
 ;; logging config
 (def reported-log-level
   (keyword (or (environ/env :reported-log-level) "warn")))
