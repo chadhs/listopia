@@ -20,11 +20,13 @@ create a `profiles.clj` in the project root (which is ignored by git) to define 
 {:dev
  {:env
   {:database-url "jdbc:postgresql://localhost/listopia-dev"
-   :reported-log-level "debug"}}
+   :reported-log-level "debug"
+   :session-cookie-key "changecookiekey1"}}
  :test
  {:env
   {:database-url "jdbc:postgresql://localhost/listopia-test"
-   :reported-log-level "debug"}}}
+   :reported-log-level "debug"
+   :session-cookie-key "changecookiekey2"}}}
 ```
 
 to run locally (after migrations have been run, see below) use `lein run` this will start on port 8000 by default, but accepts a port number as an argument as well.  to run interactively for local development run `lein ring server` to continually apply code changes as you develop.
@@ -44,6 +46,7 @@ you'll need to load the following environment variables in your production envir
 
 - `DATABASE_URL`
 - `PORT`
+- `SESSION_COOKIE_KEY`
 
 optionally you can customize the following variables in your production environment:
 
