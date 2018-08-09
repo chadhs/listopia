@@ -55,6 +55,16 @@
          :body (auth.view.login/login-page login-error)}))))
 
 
+(defn handle-auth-logout [req]
+  (let [session     (get req :session)
+        account-id  (get session :identity)
+        new-session (assoc session :identity nil)]
+    (do
+      (timbre/info (str "account logged out successfully: " account-id))
+      (-> (response/redirect "/login")
+          (assoc :session new-session)))))
+
+
 (defn handle-auth-login-page [req]
   (auth.view.login/login-page))
 

@@ -74,6 +74,8 @@
   (home.view.layout/page-layout
    (html
     [:a {:href "/lists"} "<< back to lists"]
+    " | "
+    [:a {:href "/logout"} "logout"]
     [:h2 (:name list)]
     [:h3 (:description list)]
     [:div.row

@@ -47,6 +47,7 @@
   [lists]
   (home.view.layout/page-layout
    (html
+    [:a {:href "/logout"} "logout"]
     [:h2 "My Lists"]
     [:div.row
      (if (seq lists)
